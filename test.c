@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 12:05:30 by acompagn          #+#    #+#             */
-/*   Updated: 2018/12/30 19:01:11 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/04 18:52:39 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ t_bint		*lst_init(t_bint *lst, char nb)
 
 void		print_lst(t_bint *lst)
 {
-	printf("Print_lst:\n");
 	while (lst)
 	{
-		printf("%d", lst->nb);
+		printf("%d\n", lst->nb);
 		lst = lst->next;
 	}
 	printf("\n");
@@ -54,7 +53,7 @@ void		print_lst(t_bint *lst)
 void		ft_check_ten(t_bint *lst)
 {
 	t_bint	*curr;
-	
+
 	curr = lst;
 	while (curr)
 	{
@@ -73,18 +72,24 @@ void		ft_check_ten(t_bint *lst)
 
 void		ft_check_float(t_bint *lst)
 {
-	printf("CHECK FLOAT\n");
+	int		restart;
 	t_bint	*curr;
 
-	curr = lst;
-	while (curr->next)
+	restart = 1;
+	while (restart)
 	{
-		if (curr->next->nb > 9)
+		curr = lst;
+		restart = 0;
+		while (curr->next)
 		{
-			curr->nb += 1;
-			curr->next->nb -= 10;
+			if (curr->next->nb > 9)
+			{
+				curr->nb += 1;
+				curr->next->nb -= 10;
+				restart = 1;
+			}
+			curr = curr->next;
 		}
-		curr = curr->next;
 	}
 }
 
@@ -92,13 +97,15 @@ void		ft_add(t_bint *lst1, t_bint *lst2)
 {
 	t_bint	*tmp1;
 	t_bint	*tmp2;
-	
+
 	tmp1 = lst1;
 	tmp2 = lst2;
-	while (tmp1 && tmp2)
+	while (tmp1)
 	{
 		tmp2->nb = tmp2->nb + tmp1->nb;
 		tmp1 = tmp1->next;
+		if (!tmp2->next && tmp1)
+			tmp2->next = lst_init(tmp2, 0);
 		tmp2 = tmp2->next;
 	}
 }
@@ -106,7 +113,7 @@ void		ft_add(t_bint *lst1, t_bint *lst2)
 void		ft_double(t_bint *lst1)
 {
 	t_bint	*tmp;
-	
+
 	tmp = lst1;
 	while (tmp)
 	{
@@ -142,27 +149,21 @@ t_bint		*ft_intpart(t_float *lst)
 
 void		ft_multiply(t_bint *lst)
 {
-	printf("MULT\n");
 	t_bint		*curr;
 	char		tmp;
 	char		retenue;
 
 	curr = lst;
 	retenue = 0;
-	printf("avant mult =\n");
-	print_lst(lst);
 	while (curr)
 	{
 		tmp = curr->nb;
 		curr->nb = curr->nb / 2 + retenue;
 		retenue = (tmp % 2) * 5;
-		printf("retenue = %d\n", retenue);
 		if (!curr->next && retenue)
 			curr->next = lst_init(curr->next, 0);
 		curr = curr->next;
 	}
-	printf("apres mult = \n");
-	print_lst(lst);
 }
 
 t_bint		*ft_floatpart(t_float *lst)
@@ -192,43 +193,86 @@ t_bint		*ft_floatpart(t_float *lst)
 	return (lst2);
 }
 
-void		final_string(t_float *lst, int *tab_int, int *tab_float, int precision)
+void		int_aug(int p, t_bint *int_lst, t_bint *float_lst)
+{
+	t_bint	*curr;
+
+	curr = int_lst;
+	if ((curr->nb % 2 != 0 && float_lst->nb == 5 && p != 1) ||
+		(float_lst->nb > 9) || (p < 1 && curr->nb % 2 != 0 &&
+		float_lst->nb >= 5) || (!p && float_lst->nb >= 5))
+	{
+		curr->nb += 1;
+		float_lst->nb = 0;
+	}
+	ft_check_ten(int_lst);
+}
+
+char		*ft_create_str(int p, t_bint *int_lst, t_bint *float_lst)
 {
 	int		size;
 	int		i;
 	int		j;
+	t_bint	*intpart;
+	char	*keep;
 
-	size = ft_strlen(lst->binary) / 3 + ft_strlen(lst->binary) % 3;
-	i = 0;
+	size = 0;
+	intpart = int_lst;
 	j = 0;
-	if (!(lst->keep = (char *)malloc(sizeof(char) * (size * 2 + 1))))
-		return ;
-	while (tab_int[i] == 0 && i < size + 10)
-		i++;
-	if (lst->sign == -1)
-		lst->keep[j++] = '-';
-	while (i <= size)
-		lst->keep[j++] = tab_int[i++] + 48;
-	lst->keep[j++] = '.';
-	i = 0;
-	while (i < precision - 1)
-		lst->keep[j++] = tab_float[i++] + 48;
-	if (tab_float[i + 1] > 5)
-		lst->keep[j++] = (tab_float[i] + 1) + 48;
-	else
-		lst->keep[j++] = tab_float[i] + 48;
-	lst->keep[j] = '\0';
-	printf("keep = %s\n", lst->keep);
+	while (intpart)
+	{
+		size++;
+		intpart = intpart->next;
+	}
+	i = size;
+	if (!(keep = (char *)malloc(sizeof(char) * (size + (p ? p + 1 : p)))))
+		return (NULL);
+	while (int_lst)
+	{
+		keep[--size] = int_lst->nb + 48;
+		int_lst = int_lst->next;
+	}
+	if (p)
+		keep[i++] = '.';
+	while (j < p)
+	{
+		keep[i + j++] = float_lst->nb + 48;
+		float_lst = float_lst->next;
+	}
+	return (keep);
 }
 
-int			main()
+char		*ft_precision(int p, t_bint *int_lst, t_bint *float_lst)
+{
+	t_bint	*curr;
+	int		len;
+
+	curr = float_lst;
+	len = 0;
+	while (++len < p)
+	{
+		if (!curr->next)
+			curr->next = lst_init(curr->next, 0);
+		curr = curr->next;
+	}
+	if (p && curr->next)
+	{
+		if ((curr->next->nb == 5 && (curr->next->next ||
+			curr->nb % 2 != 0)) || (curr->next->nb > 5))
+			curr->nb += 1;
+		ft_check_float(float_lst);
+	}
+	if (float_lst->nb >= 5 && p <= 1)
+		int_aug(p, int_lst, float_lst);
+	return (ft_create_str(p, int_lst, float_lst));
+}
+
+char		*ftoa(float f, int p)
 {
 	unsigned char	*tab;
-	float			f;
 	t_float			*lst;
 	int				i;
 	int				c;
-	int				precision;
 	char			str[33];
 
 	if (!(lst = (t_float*)malloc(sizeof(t_float))))
@@ -236,18 +280,23 @@ int			main()
 	str[32] = 0;
 	i = 0;
 	c = 4;
-	f = 1.25;
-	precision = 10;
 	tab = (unsigned char *)&f;
 	while (c--)
 		print_bits(*(tab + c), str, &i);
 	lst->sign = (str[0] == '0') ? 1 : -1;
 	ft_get_exp_mant(str, lst);
-	printf("mantisse = %s\n", lst->mant);
 	ft_get_point(lst);
-	printf("vrai printf: %.10f\n", f);
-	print_lst(ft_intpart(lst));
-	print_lst(ft_floatpart(lst));
-	//final_string(lst, ft_intpart(lst), ft_floatpart(lst), precision);
-	return (0);
+	return (ft_precision(p, ft_intpart(lst), ft_floatpart(lst)));
 }
+
+/*int		main()
+{
+	float	f;
+	int		p;
+
+	f = 2.7530696392059326171875000000000000000000000000000000000000000000000000000000000000000000000000000000;
+	p = 0;
+	printf("vrai printf: %.0f\n", f);
+	printf("mon printf: %s\n", ftoa(f, p));
+	return (0);
+}*/

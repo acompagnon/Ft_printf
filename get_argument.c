@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:24:27 by acompagn          #+#    #+#             */
-/*   Updated: 2018/12/17 16:24:43 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/04 18:09:30 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ const char		*ft_get_lh(const char *format, int *h, int *l)
 	while (*format == 'h' || *format == 'l' || *format == 'j')
 	{
 		if (*format == 'j')
-			(*l)+=2;
+			(*l) += 2;
 		(*format == 'h') ? (*h)++ : (*l)++;
 		format++;
 	}
 	return (format);
 }
 
-intmax_t	ft_get_signed(va_list ap, int h, int l)
+intmax_t		ft_get_signed(va_list ap, int h, int l)
 {
 	intmax_t	arg;
 
@@ -49,7 +49,7 @@ intmax_t	ft_get_signed(va_list ap, int h, int l)
 	return (arg);
 }
 
-uintmax_t	ft_get_unsigned(va_list ap, int h, int l)
+uintmax_t		ft_get_unsigned(va_list ap, int h, int l)
 {
 	uintmax_t	arg;
 

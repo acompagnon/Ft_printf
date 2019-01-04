@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 15:30:53 by acompagn          #+#    #+#             */
-/*   Updated: 2018/12/17 18:49:18 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/04 18:10:22 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void			ft_empty_buf(t_print *lst)
 {
 	write(1, lst->buf, lst->i);
-	ft_bzero(lst->buf, (BUFFER_SIZE+ 1));
+	ft_bzero(lst->buf, (BUFFER_SIZE + 1));
 	lst->i = 0;
 }
 

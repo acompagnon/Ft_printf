@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 16:11:18 by acompagn          #+#    #+#             */
-/*   Updated: 2018/12/30 16:40:15 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/04 18:08:32 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct s_float
+typedef struct	s_float
 {
 	char		mant[25];
 	char		*binary;
@@ -25,17 +25,7 @@ typedef struct s_float
 	long long	fpart;
 }				t_float;
 
-void		print_tab(int *tab, int size)
-{
-	int		i;
-
-	i = 0;
-	while (i <= size)
-		printf("%d", tab[i++]);
-	printf("\n");
-}
-
-size_t		ft_strlen(const char *s)
+size_t			ft_strlen(const char *s)
 {
 	size_t	i;
 
@@ -58,14 +48,12 @@ size_t		ft_strlen(const char *s)
 			return (i + 6);
 		if (!(s[i + 7]))
 			return (i + 7);
-		if (!(s[i + 8]))
-			return (i + 8);
-		i += 8;
+		i += 7;
 	}
 	return (i);
 }
 
-void		ft_putchar(char c)
+void			ft_putchar(char c)
 {
 	write(1, &c, 1);
 }
@@ -98,7 +86,7 @@ static int		ft_value(char c)
 	return (0);
 }
 
-int		ft_atoi_base(char *str, int str_base)
+int				ft_atoi_base(char *str, int str_base)
 {
 	int i;
 	int sign;
@@ -118,19 +106,7 @@ int		ft_atoi_base(char *str, int str_base)
 	return (nb * sign);
 }
 
-/*int	ft_atoi_base(char *str)
- *   {
- *     int		nb;
- *
- *       while (*str)
- *         {
- *           nb = nb * 2 + (*str - '0');
- *             str++;
- *               }
- *                 return (nb);
- *                   }*/
-
-void    print_bits(unsigned char octet, char *str, int *i)
+void			print_bits(unsigned char octet, char *str, int *i)
 {
 	unsigned char comp;
 
@@ -145,7 +121,7 @@ void    print_bits(unsigned char octet, char *str, int *i)
 	}
 }
 
-void		ft_get_exp_mant(char *str, t_float *lst)
+void			ft_get_exp_mant(char *str, t_float *lst)
 {
 	char	exp[9];
 	int		i;
@@ -164,7 +140,7 @@ void		ft_get_exp_mant(char *str, t_float *lst)
 	lst->mant[j] = 0;
 }
 
-void		ft_get_point(t_float *lst)
+void			ft_get_point(t_float *lst)
 {
 	int		georges;
 	int		i;
@@ -189,5 +165,4 @@ void		ft_get_point(t_float *lst)
 	while (lst->mant[j])
 		lst->binary[i++] = lst->mant[j++];
 	lst->binary[i] = 0;
-	printf("binary version with point = %s\n", lst->binary);
 }

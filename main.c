@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 17:32:55 by acompagn          #+#    #+#             */
-/*   Updated: 2018/12/17 17:59:09 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/04 18:10:48 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int		ft_printf(const char *format, ...);
 
-int     main(void)
+int		main(void)
 {
 	printf("float precision base: %f\n", 100.0123456789);
 	printf("float precision 1: %.1f\n", 100.0123456789);

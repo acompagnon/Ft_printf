@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:20:59 by acompagn          #+#    #+#             */
-/*   Updated: 2018/12/17 16:24:53 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/04 18:06:31 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char		*ft_char(va_list ap, t_print *lst)
 	int		tmp;
 	char	*c;
 
-	tmp	= va_arg(ap, int);
+	tmp = va_arg(ap, int);
 	if (!(c = (char *)malloc(sizeof(char) * 2)))
 		return (NULL);
 	c[0] = (char)tmp;
@@ -37,10 +37,11 @@ char		*ft_char(va_list ap, t_print *lst)
 	return (c);
 }
 
-char				*ft_string(va_list ap)
+char		*ft_string(va_list ap)
 {
 	char	*s;
 	char	*keep;
+
 	s = va_arg(ap, char*);
 	if (!s)
 	{
@@ -59,7 +60,7 @@ char				*ft_string(va_list ap)
 	return (keep);
 }
 
-char			*ft_unsigned(uintmax_t a)
+char		*ft_unsigned(uintmax_t a)
 {
 	char		*base;
 	char		*keep;
