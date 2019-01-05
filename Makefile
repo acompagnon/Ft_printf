@@ -6,7 +6,7 @@
 #    By: acompagn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/15 17:22:57 by acompagn          #+#    #+#              #
-#    Updated: 2018/12/17 16:40:19 by acompagn         ###   ########.fr        #
+#    Updated: 2019/01/05 18:11:26 by acompagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,11 @@ SRCS = ft_printf.c \
 	   conv.c \
 	   itoas.c \
 	   get_argument.c \
+	   float.c \
+	   float_1.c \
+	   float_2.c \
+	   float_3.c \
+	   float_4.c \
 
 OBJECTS = $(SRCS:.c=.o)
 
