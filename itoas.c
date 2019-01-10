@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:17:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 13:38:03 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 15:51:01 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,47 @@
 
 void		ft_itoa_base(uintmax_t a, char *base, t_print *lst, t_flags *flags)
 {
-	unsigned long long	len;
+	int					len;
+	int					size;
+	int					zero_case;
 	unsigned long long	tmp;
 	unsigned long long	base_len;
-	unsigned long long	size;
 	char				keep[21];
 
 	len = 1;
 	tmp = a;
 	base_len = ft_strlen(base);
-	if (flags->precision != -1 && !flags->minus)
-		flags->zero = 16;
+	zero_case = (a == 0 && flags->precision == 0) ? 1 : 0;
 	while (a /= base_len)
 		len++;
+	if (flags->precision - len > 0)
+	{
+		flags->precision -= len;
+		len += flags->precision;
+	}
 	keep[len] = '\0';
 	size = len;
+	if (zero_case)
+		size--;
+	if (lst->i + len + 1 >= BUFFER_SIZE)
+		ft_empty_buf(lst);
 	while (len--)
 	{
 		keep[len] = base[tmp % base_len];
 		tmp /= base_len;
+		if (len < flags->precision && flags->precision > size)
+			keep[len] = '0';
 	}
-	if (flags->precision != -1)
-		apply_width(lst, flags, size);
-	if (flags->width && !flags->minus)
-		apply_width(lst, flags, size);
-	if (lst->i + ft_strlen(keep) >= BUFFER_SIZE)
-		ft_empty_buf(lst);
-	while (keep[a])
-		lst->buf[lst->i++] = keep[a++];
-	if (flags->width && flags->minus)
-		apply_width(lst, flags, size);
+	len++;
+	if (flags->plus)
+		flags->space = 0;
+	if (flags->width > size && !flags->minus)
+		apply_width(lst, flags, flags->width - size);
+	if (!zero_case)
+		while (keep[len])
+		lst->buf[lst->i++] = keep[len++];
+	if (flags->width > size && flags->minus)
+		apply_width(lst, flags, flags->width - size);
 }
 
 void		ft_decimal_itoa(intmax_t nb, t_print *lst, t_flags *flags)
@@ -70,6 +81,8 @@ void		ft_decimal_itoa(intmax_t nb, t_print *lst, t_flags *flags)
 	if (zero_case)
 		size--;
 	keep[len] = '\0';
+	if (lst->i + len + 1 >= BUFFER_SIZE)
+		ft_empty_buf(lst);
 	while (len-- > 0)
 	{
 		keep[len] = (tmp % 10) + 48;
@@ -94,9 +107,7 @@ void		ft_decimal_itoa(intmax_t nb, t_print *lst, t_flags *flags)
 		while (keep[len])
 			lst->buf[lst->i++] = keep[len++];
 	if (flags->width > size && flags->minus)
-	{
 		apply_width(lst, flags, flags->width - size);
-	}
 }
 
 void		ft_octal(uintmax_t a, t_print *lst, t_flags *flags)
@@ -104,8 +115,6 @@ void		ft_octal(uintmax_t a, t_print *lst, t_flags *flags)
 	char	*base;
 
 	base = "01234567\0";
-	if (flags->minus)
-		flags->zero = 0;
 	ft_itoa_base(a, base, lst, flags);
 }
 
@@ -114,6 +123,11 @@ void		ft_hexadecimal(intmax_t a, char format, t_print *lst, t_flags *flags)
 	char	*base;
 
 	base = (format == 'x') ? "0123456789abcdef\0" : "0123456789ABCDEF\0";
+	if (flags->hashtag)
+	{
+		lst->buf[lst->i++] = '0';
+		lst->buf[lst->i++] = (format == 'x') ? 'x' : 'X';
+	}
 	ft_itoa_base(a, base, lst, flags);
 }
 

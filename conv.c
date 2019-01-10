@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:20:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 13:38:02 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 15:50:59 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void		ft_char(va_list ap, t_print *lst, t_flags *flags)
 	flags->precision = -1;
 	tmp = va_arg(ap, int);
 	if (flags->width && !flags->minus)
-		apply_width(lst, flags, 1);
+		string_width(lst, flags, flags->width - 1);
 	if (lst->i + 1 >= BUFFER_SIZE)
 		ft_empty_buf(lst);
 	lst->buf[lst->i++] = (char)tmp;
 	if (flags->width && flags->minus)
-		apply_width(lst, flags, 1);
+		string_width(lst, flags, flags->width - 1);
 }
 
 void		apply_width(t_print *lst, t_flags *flags, int len)
@@ -50,30 +50,40 @@ void		apply_width(t_print *lst, t_flags *flags, int len)
 	}
 }
 
+void		string_width(t_print *lst, t_flags *flags, int len)
+{
+	int		i;
+
+	i = 0;
+	while (i < len)
+	{
+		lst->buf[lst->i++] = flags->zero + 32;
+		i++;
+	}
+}
+
+void		ft_percent(t_print *lst, t_flags *flags)
+{
+	if (flags->width > 1 && !flags->minus)
+		string_width(lst, flags, flags->width - 1);
+	lst->buf[lst->i++] = '%';
+	if (flags->width > 1 && flags->minus)
+		string_width(lst, flags, flags->width - 1);
+}
+
 void		ft_string(va_list ap, t_print *lst, t_flags *flags)
 {
 	char	*s;
 	int		len;
 
 	s = va_arg(ap, char*);
-	len = ft_strlen(s);
-	if (flags->width && !flags->minus)
-		apply_width(lst, flags, len);
-	if (!s)
+	if (s)
 	{
-		if (lst->i + 5 >= BUFFER_SIZE)
-			ft_empty_buf(lst);
-		lst->buf[lst->i++] = '(';
-		lst->buf[lst->i++] = 'n';
-		lst->buf[lst->i++] = 'u';
-		lst->buf[lst->i++] = 'l';
-		lst->buf[lst->i++] = 'l';
-		lst->buf[lst->i++] = ')';
-	}
-	else
-	{
-		if (flags->precision != -1)
+		len = ft_strlen(s);
+		if (flags->precision != -1 && len > 0)
 			len = len - flags->precision;
+		if (flags->width > len && !flags->minus)
+			string_width(lst, flags, flags->width - len);
 		while (*s)
 		{
 			if (lst->i == BUFFER_SIZE)
@@ -83,8 +93,19 @@ void		ft_string(va_list ap, t_print *lst, t_flags *flags)
 					break;
 			lst->buf[lst->i++] = *s++;
 		}
-		if (flags->width && flags->minus)
-			apply_width(lst, flags, len);
+		if (flags->width > len && flags->minus)
+			string_width(lst, flags, flags->width - len);
+	}
+	else
+	{
+		if (lst->i + 5 >= BUFFER_SIZE)
+			ft_empty_buf(lst);
+		lst->buf[lst->i++] = '(';
+		lst->buf[lst->i++] = 'n';
+		lst->buf[lst->i++] = 'u';
+		lst->buf[lst->i++] = 'l';
+		lst->buf[lst->i++] = 'l';
+		lst->buf[lst->i++] = ')';
 	}
 }
 

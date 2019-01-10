@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 15:30:53 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 13:13:31 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 15:49:51 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void		ft_get_type(const char *format, va_list ap, t_print *lst, t_flags *flags)
 		ft_hexadecimal(ft_get_unsigned(ap, flags), *format, lst, flags);
 	else if (*format == 'o')
 		ft_octal(ft_get_unsigned(ap, flags), lst, flags);
-	else if (*format == 'u')
+	else if (*format == 'u' || *format == 'U')
 		ft_unsigned(ft_get_unsigned(ap, flags), lst, flags);
 	else if (*format == 'f')
 	{
@@ -146,7 +146,7 @@ void		ft_get_type(const char *format, va_list ap, t_print *lst, t_flags *flags)
 			keep = lftoa(va_arg(ap, long double), flags->precision);
 	}
 	else if (*format == '%')
-		lst->buf[lst->i++] = '%';
+		ft_percent(lst, flags);
 	if (keep)
 		ft_put_in_buf(keep, lst, flags);
 }

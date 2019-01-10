@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 21:48:26 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 13:15:17 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 15:47:13 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ void				ft_itoa_addr(uintmax_t a, t_print *lst, t_flags *flags);
 void				ft_pointer(va_list ap, t_print *lst, t_flags *flags);
 void				ft_char(va_list ap, t_print *lst, t_flags *flags);
 void				apply_width(t_print *lst, t_flags *flags, int len);
+void				string_width(t_print *lst, t_flags *flags, int len);
 void				ft_string(va_list ap, t_print *lst, t_flags *flags);
+void				ft_percent(t_print *lst, t_flags *flags);
 void				ft_unsigned(uintmax_t a, t_print *lst, t_flags *flags);
 const char			*ft_get_lh(const char *format, int *h, int *l);
 intmax_t			ft_get_signed(va_list ap, t_flags *flags);
