@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:17:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 15:51:01 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 16:48:18 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ void		ft_itoa_base(uintmax_t a, char *base, t_print *lst, t_flags *flags)
 	size = len;
 	if (zero_case)
 		size--;
+	if (flags->hashtag == 1 || flags->hashtag == 2)
+		size += 2;
+	if (flags->hashtag == 4)
+		size += 1;
 	if (lst->i + len + 1 >= BUFFER_SIZE)
 		ft_empty_buf(lst);
 	while (len--)
@@ -50,9 +54,11 @@ void		ft_itoa_base(uintmax_t a, char *base, t_print *lst, t_flags *flags)
 		flags->space = 0;
 	if (flags->width > size && !flags->minus)
 		apply_width(lst, flags, flags->width - size);
+	if (flags->hashtag == 4)
+		lst->buf[lst->i++] = '0';
 	if (!zero_case)
 		while (keep[len])
-		lst->buf[lst->i++] = keep[len++];
+			lst->buf[lst->i++] = keep[len++];
 	if (flags->width > size && flags->minus)
 		apply_width(lst, flags, flags->width - size);
 }
@@ -115,6 +121,8 @@ void		ft_octal(uintmax_t a, t_print *lst, t_flags *flags)
 	char	*base;
 
 	base = "01234567\0";
+	if (flags->hashtag)
+		flags->hashtag = 4;
 	ft_itoa_base(a, base, lst, flags);
 }
 
@@ -123,11 +131,14 @@ void		ft_hexadecimal(intmax_t a, char format, t_print *lst, t_flags *flags)
 	char	*base;
 
 	base = (format == 'x') ? "0123456789abcdef\0" : "0123456789ABCDEF\0";
-	if (flags->hashtag)
+	if (flags->hashtag && a != 0 && (flags->width == -1 || flags->minus))
 	{
 		lst->buf[lst->i++] = '0';
 		lst->buf[lst->i++] = (format == 'x') ? 'x' : 'X';
+		//flags->width -= 2;
 	}
+	else if (flags->hashtag && flags->width != -1 && a != 0)
+		flags->hashtag = (format == 'x') ? 2 : 3;
 	ft_itoa_base(a, base, lst, flags);
 }
 
