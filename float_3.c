@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:02:42 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/05 18:02:50 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/07 16:50:48 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void		int_aug(int p, t_bint *int_lst, t_bint *float_lst)
 
 	curr = int_lst;
 	if ((curr->nb % 2 != 0 && float_lst->nb == 5 && p != 1) ||
-			(float_lst->nb > 9) || (!p && float_lst->nb >= 5 && curr->nb % 2 != 0) || (!p && float_lst->nb > 5 && curr->nb % 2 == 0))
+		(float_lst->nb > 9) || (!p && float_lst->nb >= 5 && curr->nb % 2 != 0)
+		|| (!p && float_lst->nb > 5 && curr->nb % 2 == 0))
 	{
 		curr->nb += 1;
 		float_lst->nb = 0;
@@ -75,6 +76,7 @@ char		*ft_precision(int p, t_bint *int_lst, t_bint *float_lst, int sign)
 
 	curr = float_lst;
 	len = 0;
+	p = (p == -1) ? 6 : p;
 	while (++len < p)
 	{
 		if (!curr->next)
@@ -93,7 +95,7 @@ char		*ft_precision(int p, t_bint *int_lst, t_bint *float_lst, int sign)
 	return (ft_create_str(p, int_lst, float_lst, sign));
 }
 
-int		check_double(double f, t_float *lst)
+int			check_double(double f, t_float *lst)
 {
 	int		nan;
 	int		inf;

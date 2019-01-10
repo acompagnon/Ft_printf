@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:02:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/05 18:29:14 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/05 19:59:22 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void			ft_putchar(char c)
 
 void			print_long(unsigned char *c, t_float *lst)
 {
-	int 	k;
-	int 	j;
-	int		i;
+	int	k;
+	int	j;
+	int	i;
 
 	i = 0;
 	j = 8;

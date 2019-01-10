@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 21:48:26 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/05 18:13:16 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 13:15:17 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ typedef struct		s_flags
 	int				space;
 	int				width;
 	int				precision;
+	int				h;
+	int				l;
+	int				z;
 }					t_flags;
 
 typedef struct		s_float
@@ -52,19 +55,20 @@ typedef struct		s_bint
 	struct s_bint	*next;
 }					t_bint;
 
-char				*ft_itoa_base(uintmax_t a, char *base);
-char				*ft_decimal_itoa(intmax_t nb);
-char				*ft_octal(uintmax_t a, char *keep);
-char				*ft_hexadecimal(intmax_t a, const char *format);
-char				*ft_itoa_addr(uintmax_t a);
-char				*ft_pointer(va_list ap);
-char				*ft_char(va_list ap, t_print *lst);
-char				*ft_string(va_list ap);
-char				*ft_unsigned(uintmax_t a);
+void				ft_empty_buf(t_print *lst);
+void				ft_itoa_base(uintmax_t a, char *base, t_print *lst, t_flags *flags);
+void				ft_decimal_itoa(intmax_t nb, t_print *lst, t_flags *flags);
+void				ft_octal(uintmax_t a, t_print *lst, t_flags *flags);
+void				ft_hexadecimal(intmax_t a, char format, t_print *lst, t_flags *flags);
+void				ft_itoa_addr(uintmax_t a, t_print *lst, t_flags *flags);
+void				ft_pointer(va_list ap, t_print *lst, t_flags *flags);
+void				ft_char(va_list ap, t_print *lst, t_flags *flags);
+void				apply_width(t_print *lst, t_flags *flags, int len);
+void				ft_string(va_list ap, t_print *lst, t_flags *flags);
+void				ft_unsigned(uintmax_t a, t_print *lst, t_flags *flags);
 const char			*ft_get_lh(const char *format, int *h, int *l);
-intmax_t			ft_get_signed(va_list ap, int h, int l);
-uintmax_t			ft_get_unsigned(va_list ap, int h, int l);
-
+intmax_t			ft_get_signed(va_list ap, t_flags *flags);
+uintmax_t			ft_get_unsigned(va_list ap, t_flags *flags);
 
 char				*ftoa(double f, int p);
 char				*lftoa(long double f, int p);

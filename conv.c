@@ -6,66 +6,92 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:20:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/04 18:06:31 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 13:38:02 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char		*ft_pointer(va_list ap)
+void		ft_pointer(va_list ap, t_print *lst, t_flags *flags)
 {
 	unsigned long long	a;
-	char				*keep;
 
 	a = va_arg(ap, unsigned long long);
-	keep = ft_itoa_addr(a);
-	return (keep);
+	ft_itoa_addr(a, lst, flags);
 }
 
-char		*ft_char(va_list ap, t_print *lst)
+void		ft_char(va_list ap, t_print *lst, t_flags *flags)
 {
 	int		tmp;
 	char	*c;
 
+	flags->precision = -1;
 	tmp = va_arg(ap, int);
-	if (!(c = (char *)malloc(sizeof(char) * 2)))
-		return (NULL);
-	c[0] = (char)tmp;
-	c[1] = 0;
-	if (!tmp)
-		lst->i++;
-	return (c);
+	if (flags->width && !flags->minus)
+		apply_width(lst, flags, 1);
+	if (lst->i + 1 >= BUFFER_SIZE)
+		ft_empty_buf(lst);
+	lst->buf[lst->i++] = (char)tmp;
+	if (flags->width && flags->minus)
+		apply_width(lst, flags, 1);
 }
 
-char		*ft_string(va_list ap)
+void		apply_width(t_print *lst, t_flags *flags, int len)
+{
+	int		i;
+
+	i = 0;
+	if (flags->minus != 0 || flags->precision != -1)
+		flags->zero = 0;
+	while (i < len)
+	{
+		lst->buf[lst->i++] = flags->zero + 32;
+		i++;
+	}
+}
+
+void		ft_string(va_list ap, t_print *lst, t_flags *flags)
 {
 	char	*s;
-	char	*keep;
+	int		len;
 
 	s = va_arg(ap, char*);
+	len = ft_strlen(s);
+	if (flags->width && !flags->minus)
+		apply_width(lst, flags, len);
 	if (!s)
 	{
-		if (!(keep = (char *)malloc(sizeof(char) * 7)))
-			return (NULL);
-		keep[0] = '(';
-		keep[1] = 'n';
-		keep[2] = 'u';
-		keep[3] = 'l';
-		keep[4] = 'l';
-		keep[5] = ')';
-		keep[6] = '\0';
+		if (lst->i + 5 >= BUFFER_SIZE)
+			ft_empty_buf(lst);
+		lst->buf[lst->i++] = '(';
+		lst->buf[lst->i++] = 'n';
+		lst->buf[lst->i++] = 'u';
+		lst->buf[lst->i++] = 'l';
+		lst->buf[lst->i++] = 'l';
+		lst->buf[lst->i++] = ')';
 	}
 	else
-		keep = ft_strdup(s);
-	return (keep);
+	{
+		if (flags->precision != -1)
+			len = len - flags->precision;
+		while (*s)
+		{
+			if (lst->i == BUFFER_SIZE)
+				ft_empty_buf(lst);
+			if (flags->precision >= 0)
+				if (!flags->precision--)
+					break;
+			lst->buf[lst->i++] = *s++;
+		}
+		if (flags->width && flags->minus)
+			apply_width(lst, flags, len);
+	}
 }
 
-char		*ft_unsigned(uintmax_t a)
+void		ft_unsigned(uintmax_t a, t_print *lst, t_flags *flags)
 {
 	char		*base;
-	char		*keep;
 
 	base = "0123456789\0";
-	keep = ft_itoa_base(a, base);
-	return (keep);
+	ft_itoa_base(a, base, lst, flags);
 }
