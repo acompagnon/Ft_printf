@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:20:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 16:46:30 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 18:08:39 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		apply_width(t_print *lst, t_flags *flags, int len)
 	i = 0;
 	if (flags->minus != 0 || flags->precision != -1)
 		flags->zero = 0;
-	if ((flags->hashtag == 1 || flags->hashtag == 2) && flags->zero)
+	if ((flags->hashtag == 2 || flags->hashtag == 3) && flags->zero)
 	{
 		lst->buf[lst->i++] = '0';
 		lst->buf[lst->i++] = (flags->hashtag == 2) ? 'x' : 'X';
@@ -53,7 +53,7 @@ void		apply_width(t_print *lst, t_flags *flags, int len)
 		lst->buf[lst->i++] = flags->zero + 32;
 		i++;
 	}
-	if ((flags->hashtag == 1 || flags->hashtag == 2) && !flags->zero && !flags->minus)
+	if ((flags->hashtag == 2 || flags->hashtag == 3) && !flags->zero && !flags->minus)
 	{
 		lst->buf[lst->i++] = '0';
 		lst->buf[lst->i++] = (flags->hashtag == 2) ? 'x' : 'X';
@@ -65,6 +65,8 @@ void		string_width(t_print *lst, t_flags *flags, int len)
 	int		i;
 
 	i = 0;
+	if (flags->minus)
+		flags->zero = 0;
 	while (i < len)
 	{
 		lst->buf[lst->i++] = flags->zero + 32;
@@ -92,7 +94,7 @@ void		ft_string(va_list ap, t_print *lst, t_flags *flags)
 		len = ft_strlen(s);
 		if (flags->precision != -1 && len > 0)
 			len = len - flags->precision;
-		if (flags->width > len && !flags->minus)
+		if (flags->width > len && !flags->minus && len >= 0)
 			string_width(lst, flags, flags->width - len);
 		while (*s)
 		{

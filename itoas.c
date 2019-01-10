@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:17:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 16:48:18 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 17:53:33 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ void		ft_hexadecimal(intmax_t a, char format, t_print *lst, t_flags *flags)
 	{
 		lst->buf[lst->i++] = '0';
 		lst->buf[lst->i++] = (format == 'x') ? 'x' : 'X';
-		//flags->width -= 2;
 	}
 	else if (flags->hashtag && flags->width != -1 && a != 0)
 		flags->hashtag = (format == 'x') ? 2 : 3;
@@ -159,17 +158,19 @@ void		ft_itoa_addr(uintmax_t a, t_print *lst, t_flags *flags)
 	keep[0] = '0';
 	keep[1] = 'x';
 	size = len;
+	if (a == 0)
+		len = 0;
 	while (len-- > 2)
 	{
 		keep[len] = base[tmp % 16];
 		tmp /= 16;
 	}
-	if (flags->width && !flags->minus)
+	if (flags->width != -1 && !flags->minus)
 		apply_width(lst, flags, size);
 	if (lst->i + ft_strlen(keep) >= BUFFER_SIZE)
 		ft_empty_buf(lst);
 	while (keep[a])
-		lst->buf[lst->i++] = keep[a++];
+			lst->buf[lst->i++] = keep[a++];
 	if (flags->width && flags->minus)
 		apply_width(lst, flags, size);
 }

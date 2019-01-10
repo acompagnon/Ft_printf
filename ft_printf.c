@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 15:30:53 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 16:13:42 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 17:58:11 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,22 +119,22 @@ int			ft_get_flags(char **format, t_flags *flags)
 	return (0);
 }
 
-void		ft_get_type(const char *format, va_list ap, t_print *lst, t_flags *flags)
+int		ft_get_type(const char *format, va_list ap, t_print *lst, t_flags *flags)
 {
 	char	*keep;
 
 	keep = NULL;
 	if (*format == 's')
 		ft_string(ap, lst, flags);
-	else if (*format == 'c')
+	else if (*format == 'c' || *format == 'C')
 		ft_char(ap, lst, flags);
 	else if (*format == 'p')
 		ft_pointer(ap, lst, flags);
-	else if (*format == 'd' || *format == 'i')
+	else if (*format == 'd' || *format == 'D' || *format == 'i')
 		ft_decimal_itoa(ft_get_signed(ap, flags), lst, flags);
 	else if (*format == 'x' || *format == 'X')
 		ft_hexadecimal(ft_get_unsigned(ap, flags), *format, lst, flags);
-	else if (*format == 'o')
+	else if (*format == 'o' || *format == 'O')
 		ft_octal(ft_get_unsigned(ap, flags), lst, flags);
 	else if (*format == 'u' || *format == 'U')
 		ft_unsigned(ft_get_unsigned(ap, flags), lst, flags);
@@ -144,11 +144,15 @@ void		ft_get_type(const char *format, va_list ap, t_print *lst, t_flags *flags)
 			keep = ftoa(va_arg(ap, double), flags->precision);
 		else
 			keep = lftoa(va_arg(ap, long double), flags->precision);
+		ft_put_in_buf(keep, lst, flags);
 	}
 	else if (*format == '%')
 		ft_percent(lst, flags);
-	if (keep)
-		ft_put_in_buf(keep, lst, flags);
+	else if ((*format >= 'a' && *format <= 'z') || (*format >= 'A' && *format <= 'Z'))
+		lst->buf[lst->i++] = *format;
+	else
+		return (1);
+	return (0);
 }
 
 int				ft_printf(const char *format, ...)
@@ -167,7 +171,8 @@ int				ft_printf(const char *format, ...)
 			ft_init_lst(&flags);
 			while (*++format && !ft_get_flags((char **)&format, &flags))
 				;
-			ft_get_type(format, ap, &lst, &flags);
+			if (ft_get_type(format, ap, &lst, &flags))
+				break ;
 		}
 		else
 		{
