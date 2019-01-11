@@ -6,30 +6,274 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 17:32:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 21:56:45 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 15:17:40 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+/*#include <stdio.h>
 #include "ft_printf.h"
 
 int		ft_printf(const char *format, ...);
 
 int		main(void)
+  {
+  int		i;
+
+  i = 42;
+//ft_printf("mon printf = float precision 12: %.12f\n", 100.0123456789);
+//printf("vrai printf = float precision 12: %.12f\n", 100.0123456789);
+//printf("%d\n", ft_printf("je suis %s", "la\n"));
+//printf("%d\n", printf("je suis %s", "la\n"));
+//printf("50 = mon printf = %d\n", ft_printf("{%10d}\n", -7));
+//printf("50 = vrai printf = %d\n", printf("{%10d}\n", -7));
+//printf("mon printf = %d\n", ft_printf("%#.3o\n", 1));
+//printf("vrai printf = %d\n", printf("%#.3o\n", 1));
+printf("mon printf = %d\n", ft_printf("%.2Lf\n", (long double)5697.9995855607502748263470948586473241448402404785156250000000000000000000000000000000000000000000000000));
+printf("vrai printf = %d\n", printf("%.2Lf\n", (long double)5697.9995855607502748263470948586473241448402404785156250000000000000000000000000000000000000000000000000));
+//printf("mon printf = %d\n", ft_printf("{% s}\n", NULL));
+//printf("vrai printf = %d\n", printf("{% s}\n", NULL));
+//printf("mon printf = %d\n", ft_printf("{%f}{%F}\n", -1.42, -1.42));
+//printf("vrai printf = %d\n", printf("{%f}{%F}\n", -1.42, -1.42));
+return (0);
+}
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <unistd.h>
+#include <float.h>
+
+int		ft_printf(char const *format, ...);
+char	*ftoa(double f, int prec);
+char	*lftoa(long double f, int prec);
+
+int		main(void)
 {
+	float	f;
+	double	d;
 	int		i;
-	
-	i = 42;
-	//ft_printf("mon printf = float precision 12: %.12f\n", 100.0123456789);
-	//printf("vrai printf = float precision 12: %.12f\n", 100.0123456789);
-	//printf("%d\n", ft_printf("je suis %s", "la\n"));
-	//printf("%d\n", printf("je suis %s", "la\n"));
-	printf("50 = mon printf = %d\n", ft_printf("{%10d}\n", -7));
-	printf("50 = vrai printf = %d\n", printf("{%10d}\n", -7));
-	printf("mon printf = %d\n", ft_printf("%+d\n", -42));
-	printf("vrai printf = %d\n", printf("%+d\n", -42));
-	printf("mon printf = %d\n", ft_printf("%o\n", 0));
-	printf("vrai printf = %d\n", printf("%o\n", 0));
-	printf("mon printf = %d\n", ft_printf("%#.O\n", 0));
-	printf("vrai printf = %d\n", printf("%#.O\n", 0));
+	float	a;
+	double	b;
+	int		c;
+	int		prec;
+	int		error;
+	char	buf[10000];
+	char	*fstr;
+	long double ld;
+
+	a = 10000;
+	b = 10000;
+	c = 10000;
+	srand(time(NULL));
+	bzero(buf, 151);
+	srand((unsigned)time(NULL));
+	error = 0;
+	while (i++ < 2001)
+	{
+		prec = rand() % 100;
+		f = (float)rand()/(float)(RAND_MAX/a);
+		printf("FLOAT =      %.100f with precision %d\n", f, prec);
+		sprintf(buf, "%.*Lf", prec, f);
+		if (strcmp((fstr = ftoa((double)f , prec)), buf))
+		{
+			printf("\033[31m----------ERROR----------\033[0m\n");
+			printf("my printf:   %s\n", fstr);
+			printf("real printf: %s\n\n", buf);
+			error++;
+		}
+		else
+			printf("\033[32m-----------OK!-----------\033[0m\n\n");
+		free(fstr);
+	}
+	i = 0;
+	while (i++ < 100)
+	{
+		prec = rand() % 100;
+		d = (double)rand()/(double)(RAND_MAX/b);
+		printf("DOUBLE =     %.100f with precision %d\n", d, prec);
+		sprintf(buf, "%.*f", prec, d);
+		if (strcmp((fstr = ftoa(d , prec)), buf))
+		{
+			printf("\033[31m----------ERROR----------\033[0m\n");
+			printf("my printf:   %s\n", fstr);
+			printf("real printf: %s\n\n", buf);
+			error++;
+		}
+		else
+			printf("\033[32m-----------OK!-----------\033[0m\n\n");
+		free(fstr);
+	}
+	i = -1;
+	printf("\n----------ARRONDIS----------\n");
+	d = -0.0;
+	while (d < 25)
+	{
+		i++;
+		prec = i % 2 ? 0 : 1;
+		sprintf(buf, "%.*f", prec, d);
+		printf("DOUBLE =     %.100f with precision %d\n", d, prec);
+		if (strcmp((fstr = ftoa(d , prec)), buf))
+		{
+			printf("\033[31m----------ERROR----------\033[0m\n");
+			printf("my printf:   %s\n", fstr);
+			printf("real printf: %s\n\n", buf);
+			error++;
+		}
+		else
+			printf("\033[32m-----------OK!-----------\033[0m\n\n");
+		free(fstr);
+		d = i * 0.25;
+	}
+	printf("\n----------SPECIAL CASE----------\n");
+	i = -4;
+	d = -0.0 / 0.0;
+	while (i++ < 3)
+	{
+		printf("DOUBLE =     %.100f\n", d);
+		sprintf(buf, "%f", d);
+		if (strcmp((fstr = ftoa(d , 6)), buf))
+		{
+			printf("\033[31m----------ERROR----------\033[0m\n");
+			printf("my printf:   %s\n", fstr);
+			printf("real printf: %s\n\n", buf);
+			error++;
+		}
+		else
+			printf("\033[32m-----------OK!-----------\033[0m\n\n");
+		free(fstr);
+		d = i / 0.0;
+	}
+	f = 3.40282e+38;
+	printf("MAX FLOAT =     %.100f\n", f);
+	sprintf(buf, "%f", f);
+	if (strcmp((fstr = ftoa(f , 6)), buf))
+	{
+		printf("\033[31m----------ERROR----------\033[0m\n");
+		printf("my printf:   %s\n", fstr);
+		printf("real printf: %s\n\n", buf);
+		error++;
+	}
+	else
+		printf("\033[32m-----------OK!-----------\033[0m\n\n");
+	free(fstr);
+	f = 1.17549e-38;
+	printf("MIN FLOAT =     %.300f\n", f);
+	sprintf(buf, "%.300f", f);
+	if (strcmp((fstr = ftoa(f , 300)), buf))
+	{
+		printf("\033[31m----------ERROR----------\033[0m\n");
+		printf("my printf:   %s\n", fstr);
+		printf("real printf: %s\n\n", buf);
+		error++;
+	}
+	else
+		printf("\033[32m-----------OK!-----------\033[0m\n\n");
+	free(fstr);
+	d = 1.79769e+308;
+	printf("MAX DOUBLE =     %.100f\n", d);
+	sprintf(buf, "%f", d);
+	if (strcmp((fstr = ftoa(d , 6)), buf))
+	{
+		printf("\033[31m----------ERROR----------\033[0m\n");
+		printf("my printf:   %s\n", fstr);
+		printf("real printf: %s\n\n", buf);
+		error++;
+	}
+	else
+		printf("\033[32m-----------OK!-----------\033[0m\n\n");
+	free(fstr);
+	d = 2.22507e-308;
+	printf("MIN DOUBLE =     %.1100f\n", d);
+	sprintf(buf, "%.1100f", d);
+	if (strcmp((fstr = ftoa(d , 1100)), buf))
+	{
+		printf("\033[31m----------ERROR----------\033[0m\n");
+		printf("my printf:   %s\n", fstr);
+		printf("real printf: %s\n\n", buf);
+		error++;
+	}
+	else
+		printf("\033[32m-----------OK!-----------\033[0m\n\n");
+	free(fstr);
+	printf("MIN DOUBLE ROUND =  %.1100f\n", d);
+	sprintf(buf, "%.1069f", d);
+	if (strcmp((fstr = ftoa(d , 1069)), buf))
+	{
+		printf("\033[31m----------ERROR----------\033[0m\n");
+		printf("my printf:   %s\n", fstr);
+		printf("real printf: %s\n\n", buf);
+		error++;
+	}
+	else
+		printf("\033[32m-----------OK!-----------\033[0m\n\n");
+	free(fstr);
+	ld = LDBL_MAX;
+	printf("MAX LONG DOUBLE =     %.100Lf\n", ld);
+	sprintf(buf, "%Lf", ld);
+	if (strcmp((fstr = lftoa(ld , 6)), buf))
+	{
+		printf("\033[31m----------ERROR----------\033[0m\n");
+		printf("my printf:   %s\n", fstr);
+		printf("real printf: %s\n\n", buf);
+		error++;
+	}
+	else
+		printf("\033[32m-----------OK!-----------\033[0m\n\n");
+	free(fstr);
+	ld = LDBL_MIN;
+	printf("MIN LONG DOUBLE =     %.100Lf\n", ld);
+	sprintf(buf, "%.7000Lf", ld);
+	if (strcmp((fstr = lftoa(ld , 7000)), buf))
+	{
+		printf("\033[31m----------ERROR----------\033[0m\n");
+		printf("my printf:   %s\n", fstr);
+		printf("real printf: %s\n\n", buf);
+		error++;
+	}
+	else
+		printf("\033[32m-----------OK!-----------\033[0m\n\n");
+	free(fstr);
+	i = -4;
+	ld = -0.0 / 0.0;
+	while (i++ < 3)
+	{
+		printf("SPECIAL CASE LD =     %.100Lf\n", ld);
+		sprintf(buf, "%Lf", ld);
+		if (strcmp((fstr = lftoa(ld , 6)), buf))
+		{
+			printf("\033[31m----------ERROR----------\033[0m\n");
+			printf("my printf:   %s\n", fstr);
+			printf("real printf: %s\n\n", buf);
+			error++;
+		}
+		else
+			printf("\033[32m-----------OK!-----------\033[0m\n\n");
+		free(fstr);
+		ld = i / 0.0;
+	}
+	i = 0;
+	while (i++ < 100 || !error)
+	{
+		prec = rand() % 100;
+		ld = (long double)rand()/(long double)(RAND_MAX/c);
+		printf("LONG DOUBLE =     %.100Lf with precision %d\n", ld, prec);
+		sprintf(buf, "%.*Lf", prec, ld);
+		fstr = lftoa(ld, prec);
+		if (strcmp(fstr, buf))
+		{
+			printf("\033[31m----------ERROR----------\033[0m\n");
+			printf("my printf:   %s\n", fstr);
+			printf("real printf: %s\n\n", buf);
+			error++;
+		}
+		else
+			printf("\033[32m-----------OK!-----------\033[0m\n\n");
+		free(fstr);
+	}
+	if (error)
+		printf("\033[31m%d errors\n\033[0m", error);
+	else
+		printf("\033[32mno errors\033[0m\n");
+	return (0);
 }

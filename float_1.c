@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 17:52:10 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 17:21:33 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 14:54:31 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,6 @@ t_bint		*lst_init(t_bint *lst, char nb)
 	lst->nb = nb;
 	lst->next = NULL;
 	return (lst);
-}
-
-void		print_lst(t_bint *lst)
-{
-	while (lst)
-	{
-		printf("%d", lst->nb);
-		lst = lst->next;
-	}
-	printf("\n");
 }
 
 void		ft_check_ten(t_bint *lst)

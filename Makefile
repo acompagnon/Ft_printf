@@ -6,7 +6,7 @@
 #    By: acompagn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/15 17:22:57 by acompagn          #+#    #+#              #
-#    Updated: 2019/01/10 22:00:36 by acompagn         ###   ########.fr        #
+#    Updated: 2019/01/11 14:48:47 by acompagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ libft/libft.a:
 	@(cd libft/ && make)
 
 test: all
-	@gcc $(CFLAGS) main.c -L. -lftprintf -o printest -I $(HEADERS)
+	@gcc  main.c -L. -lftprintf -o printest -I $(HEADERS)
+	./printest
 
 %.o: %.c $(HEADERS) ft_printf.h
 	@gcc $(CFLAGS) -I $(HEADERS) -o $@ -c $<

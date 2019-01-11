@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:02:42 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 17:21:52 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 15:22:49 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 void		int_aug(int p, t_bint *int_lst, t_bint *float_lst)
 {
 	t_bint	*curr;
-	print_lst(int_lst);
-	print_lst(float_lst);
 
 	curr = int_lst;
 	if ((curr->nb % 2 != 0 && float_lst->nb == 5 && p != 1) ||
-		(float_lst->nb > 9) || (!p && float_lst->nb >= 5 && curr->nb % 2 != 0)
-		|| (!p && float_lst->nb > 5 && curr->nb % 2 == 0))
+		(float_lst->nb > 9) || (p == 0 && float_lst->nb >= 5 && curr->nb % 2 != 0)
+		|| (p == 0 && float_lst->nb > 5 && curr->nb % 2 == 0) || (!p && float_lst->nb == 5 && float_lst->next && float_lst->next->nb > 0 && curr->nb % 2 == 0) || (!p && float_lst->nb == 5 && float_lst->next && float_lst->next->nb == 0 && float_lst->next->next && curr->nb % 2 == 0))
 	{
 		curr->nb += 1;
 		float_lst->nb = 0;
@@ -66,6 +64,7 @@ char		*ft_create_str(int p, t_bint *int_lst, t_bint *float_lst, int sign)
 		keep[i + j++] = float_lst->nb + 48;
 		float_lst = float_lst->next;
 	}
+	keep[i + j] = '\0';
 	return (keep);
 }
 
@@ -90,7 +89,7 @@ char		*ft_precision(int p, t_bint *int_lst, t_bint *float_lst, int sign)
 			curr->nb += 1;
 		ft_check_float(float_lst);
 	}
-	if (float_lst->nb >= 5 && p <= 1)
+	if ((float_lst->nb >= 5 && p <= 1) || float_lst->nb > 9)
 		int_aug(p, int_lst, float_lst);
 	return (ft_create_str(p, int_lst, float_lst, sign));
 }
@@ -103,6 +102,30 @@ int			check_double(double f, t_float *lst)
 
 	nan = (f != f ? 1 : 0);
 	inf = (lst->intexp == 2047 ? 1 : 0);
+	i = 0;
+	if (nan || inf)
+	{
+		if (!(lst->keep = (char *)malloc(sizeof(char) * (4 + lst->sign))))
+			return (0);
+		if (lst->sign && !nan)
+			lst->keep[i++] = '-';
+		lst->keep[i++] = nan ? 'n' : 'i';
+		lst->keep[i++] = nan ? 'a' : 'n';
+		lst->keep[i++] = nan ? 'n' : 'f';
+		lst->keep[i] = '\0';
+		return (0);
+	}
+	return (1);
+}
+
+int		check_long_double(long double f, t_float *lst)
+{
+	int		nan;
+	int		inf;
+	int		i;
+
+	nan = (f != f ? 1 : 0);
+	inf = (lst->intexp == 32767 ? 1 : 0);
 	i = 0;
 	if (nan || inf)
 	{

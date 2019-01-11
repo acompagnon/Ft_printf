@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:17:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/11 12:05:47 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 14:42:20 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		ft_itoa_base(uintmax_t a, char *base, t_print *lst, t_flags *flags)
 		len++;
 	if (flags->precision - len > 0)
 	{
-		flags->precision -= len;
+		flags->precision -= (flags->hashtag == 4) ? len-- : len;
 		len += flags->precision;
 	}
 	keep[len] = '\0';
@@ -149,6 +149,7 @@ void		ft_itoa_addr(uintmax_t a, t_print *lst, t_flags *flags)
 {
 	int				len;
 	int				size;
+	int				zero_case;
 	uintmax_t		tmp;
 	char			keep[20];
 	char			*base;
@@ -158,23 +159,31 @@ void		ft_itoa_addr(uintmax_t a, t_print *lst, t_flags *flags)
 	base = "0123456789abcdef\0";
 	while (a /= 16)
 		len++;
+	zero_case = (tmp == 0 && flags->precision == 0) ? 1 : 0;
+	if (zero_case)
+		len--;
+	if (flags->precision - len > 0)
+	{
+		flags->precision -= len - 2;
+		len += flags->precision;
+	}
 	keep[len] = '\0';
 	keep[0] = '0';
 	keep[1] = 'x';
 	size = len;
-	if (tmp == 0 && flags->precision == 0)
-		len = 0;
 	while (len-- > 2)
 	{
 		keep[len] = base[tmp % 16];
 		tmp /= 16;
+		if (len < flags->precision && flags->precision > size)
+						keep[len] = '0';
 	}
 	if (flags->width != -1 && !flags->minus)
-		apply_width(lst, flags, size);
+		apply_width(lst, flags, flags->width - size);
 	if (lst->i + ft_strlen(keep) >= BUFFER_SIZE)
 		ft_empty_buf(lst);
 	while (keep[a])
-			lst->buf[lst->i++] = keep[a++];
+		lst->buf[lst->i++] = keep[a++];
 	if (flags->width && flags->minus)
-		apply_width(lst, flags, size);
+		apply_width(lst, flags, flags->width - size);
 }

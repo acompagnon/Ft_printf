@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 15:30:53 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/11 12:05:49 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 14:43:10 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void			ft_put_in_buf(char *keep, t_print *lst, t_flags *flags)
 		flags->zero = 0;
 	if (flags->plus)
 		flags->space = 0;
+	if (keep[0] == '-' && !flags->plus)
+		lst->buf[lst->i++] = '-';
 	if (flags->plus && flags->zero)
 		lst->buf[lst->i++] = (keep[0] == '-') ? '-' : '+';
 	if (flags->width > len && !flags->minus)
@@ -89,6 +91,7 @@ void		ft_init_lst(t_flags *flags)
 	flags->width = -1;
 	flags->precision = -1;
 	flags->l = 0;
+	flags->llf = 0;
 	flags->h = 0;
 	flags->z = 0;
 }
@@ -111,6 +114,8 @@ int			ft_get_flags(char **format, t_flags *flags)
 		*format = get_nb(*format, flags);
 	else if (**format == 'l')
 		flags->l++;
+	else if (**format == 'L')
+		flags->llf++;
 	else if (**format == 'h')
 		flags->h++;
 	else if (**format == 'j')
@@ -132,13 +137,23 @@ int			ft_get_flags(char **format, t_flags *flags)
 	return (0);
 }
 
+char	*str_capitalize(char *keep)
+{
+	int		i;
+
+	i = 0;
+	while (keep[i])
+		keep[i] = keep[i] + 32;
+	return (keep);
+}
+
 int		ft_get_type(const char *format, va_list ap, t_print *lst, t_flags *flags)
 {
 	char	*keep;
 
 	keep = NULL;
 	if (*format == 's')
-		ft_string(ap, lst, flags);
+		ft_string(va_arg(ap, char *), lst, flags);
 	else if (*format == 'c' || *format == 'C')
 		ft_char(ap, lst, flags);
 	else if (*format == 'p')
@@ -151,18 +166,18 @@ int		ft_get_type(const char *format, va_list ap, t_print *lst, t_flags *flags)
 		ft_octal(ft_get_unsigned(ap, flags), lst, flags);
 	else if (*format == 'u' || *format == 'U')
 		ft_unsigned(ft_get_unsigned(ap, flags), lst, flags);
-	else if (*format == 'f')
+	else if (*format == 'f' || *format == 'F')
 	{
-		if (!flags->l)
+		if (!flags->llf)
 			keep = ftoa(va_arg(ap, double), flags->precision);
 		else
 			keep = lftoa(va_arg(ap, long double), flags->precision);
+		if (*format == 'F' && (keep[0] == 'i' || keep[0] == 'n'))
+			str_capitalize(keep);
 		ft_put_in_buf(keep, lst, flags);
 	}
-	else if (*format == '%')
-		ft_percent(lst, flags);
 	else if (*format)
-		lst->buf[lst->i++] = *format;
+		ft_percent(lst, flags, *format);
 	else if (!*format)
 		return (1);
 	return (0);
