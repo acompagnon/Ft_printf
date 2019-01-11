@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 15:30:53 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/11 14:43:10 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 18:32:49 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int		ft_get_type(const char *format, va_list ap, t_print *lst, t_flags *flags)
 			keep = ftoa(va_arg(ap, double), flags->precision);
 		else
 			keep = lftoa(va_arg(ap, long double), flags->precision);
-		if (*format == 'F' && (keep[0] == 'i' || keep[0] == 'n'))
+		if (*format == 'F' && (keep[1] == 'i' || keep[1] == 'n'))
 			str_capitalize(keep);
 		ft_put_in_buf(keep, lst, flags);
 	}
@@ -210,6 +210,7 @@ int				ft_printf(const char *format, ...)
 		}
 		format++;
 	}
+
 	va_end(ap);
 	write(1, lst.buf, lst.i);
 	return (lst.a + lst.i);

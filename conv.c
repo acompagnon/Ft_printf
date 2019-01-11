@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:20:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/11 14:04:11 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 19:44:13 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,25 @@ void		apply_width(t_print *lst, t_flags *flags, int len)
 	int		i;
 
 	i = 0;
-	if (flags->minus != 0 || flags->precision != -1)
-		flags->zero = 0;
-	if ((flags->hashtag == 2 || flags->hashtag == 3) && flags->zero)
+	//if (flags->minus != 0 || flags->precision != -1)
+	//	flags->zero = 0;
+	if (flags->hashtag == 2 || flags->hashtag == 3)
+		len -= 2;
+	/*if ((flags->hashtag == 2 || flags->hashtag == 3) && flags->zero)
 	{
 		lst->buf[lst->i++] = '0';
 		lst->buf[lst->i++] = (flags->hashtag == 2) ? 'x' : 'X';
-	}
+	}*/
 	while (i < len)
 	{
 		lst->buf[lst->i++] = flags->zero + 32;
 		i++;
 	}
-	if ((flags->hashtag == 2 || flags->hashtag == 3) && !flags->zero && !flags->minus)
+	/*if ((flags->hashtag == 2 || flags->hashtag == 3) && !flags->zero && !flags->minus)
 	{
 		lst->buf[lst->i++] = '0';
 		lst->buf[lst->i++] = (flags->hashtag == 2) ? 'x' : 'X';
-	}
+	}*/
 }
 
 void		string_width(t_print *lst, t_flags *flags, int len)

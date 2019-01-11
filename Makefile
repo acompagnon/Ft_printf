@@ -6,7 +6,7 @@
 #    By: acompagn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/15 17:22:57 by acompagn          #+#    #+#              #
-#    Updated: 2019/01/11 14:48:47 by acompagn         ###   ########.fr        #
+#    Updated: 2019/01/11 16:28:47 by acompagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJECTS = $(SRCS:.c=.o)
 
 HEADERS = libft/
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = 
 
 RED = \033[31m
 GREEN = \033[32m

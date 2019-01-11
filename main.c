@@ -6,37 +6,60 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 17:32:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/11 15:17:40 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 19:44:07 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include <stdio.h>
+#include <stdio.h>
 #include "ft_printf.h"
 
 int		ft_printf(const char *format, ...);
 
 int		main(void)
-  {
-  int		i;
+{
+	int		ret;
+	int		tret;
 
-  i = 42;
-//ft_printf("mon printf = float precision 12: %.12f\n", 100.0123456789);
-//printf("vrai printf = float precision 12: %.12f\n", 100.0123456789);
-//printf("%d\n", ft_printf("je suis %s", "la\n"));
-//printf("%d\n", printf("je suis %s", "la\n"));
-//printf("50 = mon printf = %d\n", ft_printf("{%10d}\n", -7));
-//printf("50 = vrai printf = %d\n", printf("{%10d}\n", -7));
-//printf("mon printf = %d\n", ft_printf("%#.3o\n", 1));
-//printf("vrai printf = %d\n", printf("%#.3o\n", 1));
-printf("mon printf = %d\n", ft_printf("%.2Lf\n", (long double)5697.9995855607502748263470948586473241448402404785156250000000000000000000000000000000000000000000000000));
-printf("vrai printf = %d\n", printf("%.2Lf\n", (long double)5697.9995855607502748263470948586473241448402404785156250000000000000000000000000000000000000000000000000));
-//printf("mon printf = %d\n", ft_printf("{% s}\n", NULL));
-//printf("vrai printf = %d\n", printf("{% s}\n", NULL));
-//printf("mon printf = %d\n", ft_printf("{%f}{%F}\n", -1.42, -1.42));
-//printf("vrai printf = %d\n", printf("{%f}{%F}\n", -1.42, -1.42));
-return (0);
+	ret = 9;
+	tret = 10;
+	/*printf("%d\n", ft_printf("toto %0##0.4X%#4.2xet c'est fini \n", 0x037a, 0x9e));
+	printf("%d\n", printf("toto %0##0.4X%#4.2xet c'est fini \n", 0x037a, 0x9e));
+	printf("%d\n", ft_printf("%0006.2x\n", 0x876));
+	printf("%d\n", printf("%0006.2x\n", 0x876));
+	printf("mon printf = %d\n", ft_printf("\net%#1.2o\n", 0));
+	printf("vrai printf = %d\n", printf("\net%#1.2o\n", 0));
+	printf("mon printf = %d\n", ft_printf("\n%04.2o\n%#2o\n%#-8.3o\n", 0, 0, 0));
+	printf("vrai printf = %d\n", printf("\n%04.2o\n%#2o\n%#-8.3o\n", 0, 0, 0));
+	printf("mon printf = %d\n", ft_printf("%00+10.4d\n", 0));
+	printf("vrai printf = %d\n", printf("%00+10.4d\n", 0));
+	printf("mon printf = %d\n", ft_printf("%.24o\n", 12012));
+	printf("vrai printf = %d\n", printf("%.24o\n", 12012));
+	printf("mon printf = %d\n", ft_printf("%#.4X\n", 0xaef));
+	printf("vrai printf = %d\n", printf("%#.4X\n", 0xaef));
+	printf("mon printf = %d\n", ft_printf("%#9llX\n", (unsigned long long)-1248759650));
+	printf("vrai printf = %d\n", printf("%#9llX\n", (unsigned long long)-1248759650));
+	printf("mon printf = %d\n", ft_printf("%0#10.0x\n", 0));
+	printf("vrai printf = %d\n", printf("%0#10.0x\n", 0));
+	printf("mon printf = %d\n", ft_printf("%.24o\n", 12012));
+	printf("vrai printf = %d\n", printf("%.24o\n", 12012));
+	printf("mon printf = %d\n", ft_printf("test%-8p %---32p %#5.3x%#024X\n", &ret, &tret, 0x25, 0));
+	printf("vrai printf = %d\n", printf("test%-8p %---32p %#5.3x%#024X\n", &ret, &tret, 0x25, 0));
+	printf("mon printf = %d\n", ft_printf("%-4.7U\n", 147));
+	printf("vrai printf = %d\n", printf("%-4.7U\n", 147));
+	printf("mon printf = %d\n", ft_printf("osef ! %#9llX et %-12hhx\n", (unsigned long long)-1248759650, (unsigned char)-1478223695));
+	printf("vrai printf = %d\n", printf("osef ! %#9llX et %-12hhx\n", (unsigned long long)-1248759650, (unsigned char)-1478223695));
+	printf("mon printf = %d\n", ft_printf("%0#10.0x %0#x\n", 12345, 0));
+	printf("vrai printf = %d\n", printf("%0#10.0x %0#x\n", 12345, 0));
+	printf("mon printf = %d\n", ft_printf("test%#.4o et \n%02o \n%0#14.0o!!\n", 012, 036, 12587499));
+	printf("vrai printf = %d\n", printf("test%#.4o et \n%02o \n%0#14.0o!!\n", 012, 036, 12587499));
+	printf("mon printf = %d\n", ft_printf("cc%#.4X et %#0012x %#04hX !!", 0xaef, 0xe, (unsigned short)0));
+	printf("vrai printf = %d\n", printf("cc%#.4X et %#0012x %#04hX !!", 0xaef, 0xe, (unsigned short)0));
+	*/printf("mon printf = %d\n", ft_printf("cc%#.4X et %#0012x %#04hX !!\n", 0xaef, 0xe, (unsigned short)0));
+	printf("vrai printf = %d\n", printf("cc%#.4X et %#0012x %#04hX !!\n", 0xaef, 0xe, (unsigned short)0));
+
+	return (0);
 }
-*/
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -276,4 +299,4 @@ int		main(void)
 	else
 		printf("\033[32mno errors\033[0m\n");
 	return (0);
-}
+}*/
