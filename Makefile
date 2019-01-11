@@ -6,7 +6,7 @@
 #    By: acompagn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/15 17:22:57 by acompagn          #+#    #+#              #
-#    Updated: 2019/01/11 16:28:47 by acompagn         ###   ########.fr        #
+#    Updated: 2019/01/11 21:03:19 by acompagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ SRCS = ft_printf.c \
 	   float_2.c \
 	   float_3.c \
 	   float_4.c \
+	   buf_flags.c \
+	   string_char.c \
 
 OBJECTS = $(SRCS:.c=.o)
 

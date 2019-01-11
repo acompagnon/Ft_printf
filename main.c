@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 17:32:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/11 19:44:07 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 22:03:24 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int		main(void)
 	printf("vrai printf = %d\n", printf("test%#.4o et \n%02o \n%0#14.0o!!\n", 012, 036, 12587499));
 	printf("mon printf = %d\n", ft_printf("cc%#.4X et %#0012x %#04hX !!", 0xaef, 0xe, (unsigned short)0));
 	printf("vrai printf = %d\n", printf("cc%#.4X et %#0012x %#04hX !!", 0xaef, 0xe, (unsigned short)0));
-	*/printf("mon printf = %d\n", ft_printf("cc%#.4X et %#0012x %#04hX !!\n", 0xaef, 0xe, (unsigned short)0));
-	printf("vrai printf = %d\n", printf("cc%#.4X et %#0012x %#04hX !!\n", 0xaef, 0xe, (unsigned short)0));
+	*/printf("mon printf = %d\n", ft_printf("%5d\n", -42));
+	printf("vrai printf = %d\n", printf("%5d\n", -42));
 
 	return (0);
 }

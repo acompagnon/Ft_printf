@@ -6,21 +6,11 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:24:27 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/11 12:28:37 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 21:07:10 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/*void		print(intmax_t nb)
-{
-	int		k;
-
-	k = 64;
-	while (k--)
-		write(1, ((1ULL << k) & nb ? "1" : "0"), 1);
-	write(1, "\n", 1);;
-}*/
 
 intmax_t		ft_get_signed(va_list ap, t_flags *flags)
 {
