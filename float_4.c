@@ -6,16 +6,11 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:02:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 17:22:06 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 11:37:24 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void			ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
 
 void			print_long(unsigned char *c, t_float *lst)
 {

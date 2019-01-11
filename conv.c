@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:20:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 18:08:39 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 22:11:27 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void		ft_pointer(va_list ap, t_print *lst, t_flags *flags)
 void		ft_char(va_list ap, t_print *lst, t_flags *flags)
 {
 	int		tmp;
-	char	*c;
 
 	flags->precision = -1;
 	tmp = va_arg(ap, int);
@@ -67,6 +66,7 @@ void		string_width(t_print *lst, t_flags *flags, int len)
 	i = 0;
 	if (flags->minus)
 		flags->zero = 0;
+	//printf("len = %d\n", len);
 	while (i < len)
 	{
 		lst->buf[lst->i++] = flags->zero + 32;
@@ -92,9 +92,12 @@ void		ft_string(va_list ap, t_print *lst, t_flags *flags)
 	if (s)
 	{
 		len = ft_strlen(s);
-		if (flags->precision != -1 && len > 0)
-			len = len - flags->precision;
-		if (flags->width > len && !flags->minus && len >= 0)
+		if (flags->precision != -1 && len > 0 && flags->precision < len)
+			len = flags->precision;
+		//printf("width = %d\n", flags->width);
+		//printf("len = %d\n", len);
+		//printf("precision = %d\n", flags->precision);
+		if (flags->width > len && !flags->minus)
 			string_width(lst, flags, flags->width - len);
 		while (*s)
 		{

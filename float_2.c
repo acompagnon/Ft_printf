@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 17:53:25 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 17:21:43 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/10 22:19:46 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_bint		*ft_intpart(t_float *lst)
 	t_bint	*lst1;
 	t_bint	*lst2;
 
+	lst1 = NULL;
+	lst2 = NULL;
 	lst1 = lst_init(lst1, 1);
 	lst2 = lst_init(lst2, 0);
 	i = lst->intexp;
@@ -88,6 +90,8 @@ t_bint		*ft_floatpart(t_float *lst)
 	t_bint		*lst2;
 	int			i;
 
+	lst1 = NULL;
+	lst2 = NULL;
 	i = lst->intexp;
 	lst1 = lst_init(lst1, 5);
 	lst2 = lst_init(lst2, 0);

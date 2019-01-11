@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 15:30:53 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 17:58:11 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 12:05:49 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,29 @@ void			ft_empty_buf(t_print *lst)
 
 void			ft_put_in_buf(char *keep, t_print *lst, t_flags *flags)
 {
-	int		j;
+	int		i;
+	int		len;
 
-	j = 0;
-	flags->precision = -1;
-	if (flags->width && !flags->minus)
-		apply_width(lst, flags, ft_strlen(keep));
-	while (keep[j])
+	i = 0;
+	len = ft_strlen(keep);
+	if (flags->minus)
+		flags->zero = 0;
+	if (flags->plus)
+		flags->space = 0;
+	if (flags->plus && flags->zero)
+		lst->buf[lst->i++] = (keep[0] == '-') ? '-' : '+';
+	if (flags->width > len && !flags->minus)
+		string_width(lst, flags, flags->width - len);
+	if (keep[0] == '-')
+		i++;
+	while (keep[i])
 	{
 		if (lst->i >= BUFFER_SIZE)
 			ft_empty_buf(lst);
-		lst->buf[lst->i++] = keep[j++];
+		lst->buf[lst->i++] = keep[i++];
 	}
 	if (flags->width && flags->minus)
-		apply_width(lst, flags, ft_strlen(keep));
+		string_width(lst, flags, flags->width - len);
 	free(keep);
 }
 
@@ -81,6 +90,7 @@ void		ft_init_lst(t_flags *flags)
 	flags->precision = -1;
 	flags->l = 0;
 	flags->h = 0;
+	flags->z = 0;
 }
 
 int			ft_get_flags(char **format, t_flags *flags)
@@ -115,7 +125,10 @@ int			ft_get_flags(char **format, t_flags *flags)
 	printf("zero = %d\n", flags->zero);
 	printf("space = %d\n", flags->space);
 	printf("width = %d\n", flags->width);
-	printf("precision = %d\n\n", flags->precision);*/
+	printf("precision = %d\n", flags->precision);
+	printf("flags->l = %d\n", flags->l);
+	printf("flags->h = %d\n", flags->h);
+	printf("flags->z = %d\n", flags->z);*/
 	return (0);
 }
 
@@ -148,9 +161,9 @@ int		ft_get_type(const char *format, va_list ap, t_print *lst, t_flags *flags)
 	}
 	else if (*format == '%')
 		ft_percent(lst, flags);
-	else if ((*format >= 'a' && *format <= 'z') || (*format >= 'A' && *format <= 'Z'))
+	else if (*format)
 		lst->buf[lst->i++] = *format;
-	else
+	else if (!*format)
 		return (1);
 	return (0);
 }
@@ -172,7 +185,7 @@ int				ft_printf(const char *format, ...)
 			while (*++format && !ft_get_flags((char **)&format, &flags))
 				;
 			if (ft_get_type(format, ap, &lst, &flags))
-				break ;
+				break;
 		}
 		else
 		{

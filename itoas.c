@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:17:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 17:53:33 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 12:05:47 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ void		ft_itoa_base(uintmax_t a, char *base, t_print *lst, t_flags *flags)
 	int					size;
 	int					zero_case;
 	unsigned long long	tmp;
+	unsigned long long	nb;
 	unsigned long long	base_len;
 	char				keep[21];
 
 	len = 1;
 	tmp = a;
+	nb = a;
 	base_len = ft_strlen(base);
 	zero_case = (a == 0 && flags->precision == 0) ? 1 : 0;
 	while (a /= base_len)
@@ -54,9 +56,9 @@ void		ft_itoa_base(uintmax_t a, char *base, t_print *lst, t_flags *flags)
 		flags->space = 0;
 	if (flags->width > size && !flags->minus)
 		apply_width(lst, flags, flags->width - size);
-	if (flags->hashtag == 4)
+	if (flags->hashtag == 4 && nb != 0)
 		lst->buf[lst->i++] = '0';
-	if (!zero_case)
+	if (!zero_case || flags->hashtag == 4)
 		while (keep[len])
 			lst->buf[lst->i++] = keep[len++];
 	if (flags->width > size && flags->minus)
@@ -83,7 +85,7 @@ void		ft_decimal_itoa(intmax_t nb, t_print *lst, t_flags *flags)
 		flags->precision -= len;
 		len += flags->precision;
 	}
-	size = ((nb < 0 && !flags->plus) || flags->plus || flags->space) ? len + 1 : len;
+	size = (nb < 0 || flags->plus || flags->space) + len;
 	if (zero_case)
 		size--;
 	keep[len] = '\0';
@@ -111,7 +113,9 @@ void		ft_decimal_itoa(intmax_t nb, t_print *lst, t_flags *flags)
 		lst->buf[lst->i++] = '+';
 	if (!zero_case)
 		while (keep[len])
+		{
 			lst->buf[lst->i++] = keep[len++];
+		}
 	if (flags->width > size && flags->minus)
 		apply_width(lst, flags, flags->width - size);
 }
@@ -158,7 +162,7 @@ void		ft_itoa_addr(uintmax_t a, t_print *lst, t_flags *flags)
 	keep[0] = '0';
 	keep[1] = 'x';
 	size = len;
-	if (a == 0)
+	if (tmp == 0 && flags->precision == 0)
 		len = 0;
 	while (len-- > 2)
 	{

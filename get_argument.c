@@ -6,11 +6,21 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:24:27 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/10 13:14:38 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/11 12:05:59 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*void		print(intmax_t nb)
+{
+	int		k;
+
+	k = 64;
+	while (k--)
+		write(1, ((1ULL << k) & nb ? "1" : "0"), 1);
+	write(1, "\n", 1);;
+}*/
 
 intmax_t		ft_get_signed(va_list ap, t_flags *flags)
 {
@@ -53,9 +63,9 @@ uintmax_t		ft_get_unsigned(va_list ap, t_flags *flags)
 	else if (flags->h)
 	{
 		if (flags->h > 1)
-			arg = (unsigned short)va_arg(ap, unsigned int);
-		else
 			arg = (unsigned char)va_arg(ap, unsigned int);
+		else
+			arg = (unsigned short)va_arg(ap, unsigned int);
 	}
 	else
 		arg = va_arg(ap, unsigned int);

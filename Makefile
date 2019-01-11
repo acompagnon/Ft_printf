@@ -6,7 +6,7 @@
 #    By: acompagn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/15 17:22:57 by acompagn          #+#    #+#              #
-#    Updated: 2019/01/05 18:11:26 by acompagn         ###   ########.fr        #
+#    Updated: 2019/01/10 22:00:36 by acompagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJECTS = $(SRCS:.c=.o)
 
 HEADERS = libft/
 
-CFLAGS =
+CFLAGS = -Wall -Werror -Wextra
 
 RED = \033[31m
 GREEN = \033[32m
@@ -45,7 +45,7 @@ libft/libft.a:
 	@(cd libft/ && make)
 
 test: all
-	@gcc main.c -L. -lftprintf -o printest -I $(HEADERS)
+	@gcc $(CFLAGS) main.c -L. -lftprintf -o printest -I $(HEADERS)
 
 %.o: %.c $(HEADERS) ft_printf.h
 	@gcc $(CFLAGS) -I $(HEADERS) -o $@ -c $<
