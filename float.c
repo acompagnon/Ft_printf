@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:01:57 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/11 20:44:52 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 15:00:24 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char		*lftoa(long double f, int p)
 	return (ft_precision(p, ft_intpart(lst), ft_floatpart(lst), lst->sign));
 }
 
-char	*str_capitalize(char *keep)
+static char	*str_capitalize(char *keep)
 {
 	int		i;
 
@@ -48,7 +48,7 @@ char	*str_capitalize(char *keep)
 	return (keep);
 }
 
-void	float_call(va_list ap, t_print *lst, t_flags *flags, char format)
+void		float_call(va_list ap, t_print *lst, t_flags *flags, char format)
 {
 	if (!flags->llf)
 		lst->keep = ftoa(va_arg(ap, double), flags->precision);
@@ -58,4 +58,3 @@ void	float_call(va_list ap, t_print *lst, t_flags *flags, char format)
 		lst->keep = str_capitalize(lst->keep);
 	ft_put_in_buf(lst->keep, lst, flags);
 }
-

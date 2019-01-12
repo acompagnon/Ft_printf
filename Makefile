@@ -6,7 +6,7 @@
 #    By: acompagn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/15 17:22:57 by acompagn          #+#    #+#              #
-#    Updated: 2019/01/11 21:03:19 by acompagn         ###   ########.fr        #
+#    Updated: 2019/01/12 15:02:17 by acompagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = libftprintf.a
 SRCS = ft_printf.c \
 	   conv.c \
 	   itoas.c \
+	   itoas_1.c \
 	   get_argument.c \
 	   float.c \
 	   float_1.c \

@@ -6,16 +6,16 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 17:52:10 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/11 14:54:31 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 12:05:08 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			print_bits(unsigned char *c, t_float *lst)
+void		print_bits(unsigned char *c, t_float *lst)
 {
-	int 	k;
-	int 	j;
+	int		k;
+	int		j;
 	int		i;
 
 	i = 0;

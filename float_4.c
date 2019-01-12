@@ -6,13 +6,13 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:02:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/11 14:01:05 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 13:12:57 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			print_long(unsigned char *c, t_float *lst)
+void		print_long(unsigned char *c, t_float *lst)
 {
 	int	k;
 	int	j;
@@ -31,4 +31,52 @@ void			print_long(unsigned char *c, t_float *lst)
 	}
 	lst->mant[i] = '\0';
 	lst->size = i;
+}
+
+int			check_double(double f, t_float *lst)
+{
+	int		nan;
+	int		inf;
+	int		i;
+
+	nan = (f != f ? 1 : 0);
+	inf = (lst->intexp == 2047 ? 1 : 0);
+	i = 0;
+	if (nan || inf)
+	{
+		if (!(lst->keep = (char *)malloc(sizeof(char) * (4 + lst->sign))))
+			return (0);
+		if (lst->sign && !nan)
+			lst->keep[i++] = '-';
+		lst->keep[i++] = nan ? 'n' : 'i';
+		lst->keep[i++] = nan ? 'a' : 'n';
+		lst->keep[i++] = nan ? 'n' : 'f';
+		lst->keep[i] = '\0';
+		return (0);
+	}
+	return (1);
+}
+
+int			check_long_double(long double f, t_float *lst)
+{
+	int		nan;
+	int		inf;
+	int		i;
+
+	nan = (f != f ? 1 : 0);
+	inf = (lst->intexp == 32767 ? 1 : 0);
+	i = 0;
+	if (nan || inf)
+	{
+		if (!(lst->keep = (char *)malloc(sizeof(char) * (4 + lst->sign))))
+			return (0);
+		if (lst->sign && !nan)
+			lst->keep[i++] = '-';
+		lst->keep[i++] = nan ? 'n' : 'i';
+		lst->keep[i++] = nan ? 'a' : 'n';
+		lst->keep[i++] = nan ? 'n' : 'f';
+		lst->keep[i] = '\0';
+		return (0);
+	}
+	return (1);
 }

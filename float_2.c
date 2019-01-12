@@ -6,13 +6,13 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 17:53:25 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/11 14:54:42 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 12:01:36 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		ft_add(t_bint *lst1, t_bint *lst2)
+static void	ft_add(t_bint *lst1, t_bint *lst2)
 {
 	t_bint	*tmp1;
 	t_bint	*tmp2;
@@ -29,7 +29,7 @@ void		ft_add(t_bint *lst1, t_bint *lst2)
 	}
 }
 
-void		ft_double(t_bint *lst1)
+static void	ft_double(t_bint *lst1)
 {
 	t_bint	*tmp;
 
@@ -65,7 +65,7 @@ t_bint		*ft_intpart(t_float *lst)
 	return (lst2);
 }
 
-void		ft_multiply(t_bint *lst)
+static void	ft_multiply(t_bint *lst)
 {
 	t_bint		*curr;
 	char		tmp;
