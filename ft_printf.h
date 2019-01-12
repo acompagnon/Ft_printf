@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 21:48:26 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 19:08:20 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 20:26:09 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,11 @@ int						check_double(double f, t_float *lst);
 int						check_long_double(long double f, t_float *lst);
 void					print_long(unsigned char *c, t_float *lst);
 void					free_lst(t_bint *begin_lst);
+void					ft_add(t_bint *lst1, t_bint *lst2);
+void					ft_multiply(t_bint *lst);
+t_bint					*free_time(t_float *lst_float, t_bint *lst_bint);
+char					*malloc_fail(t_bint *int_lst, t_bint *float_lst);
+int						check_validity(t_bint *int_lst, t_bint *float_lst);
 
 char					*ftoa(double f, int p);
 char					*lftoa(long double f, int p);

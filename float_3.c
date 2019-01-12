@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:02:42 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 17:14:53 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 20:26:25 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static char	*ft_create_str(int p, t_bint *int_lst, t_bint *float_lst, int sign)
 	malloc_size = size + (p ? p + 1 : p) + sign + 1;
 	tmp = int_lst;
 	if (!(keep = (char *)malloc(sizeof(char) * malloc_size)))
-		return (NULL);
+		return (malloc_fail(int_lst, float_lst));
 	if (sign)
 	{
 		keep[0] = '-';
@@ -108,6 +108,8 @@ char		*ft_precision(int p, t_bint *int_lst, t_bint *float_lst, int sign)
 	t_bint	*curr;
 	int		len;
 
+	if (!(check_validity(int_lst, float_lst)))
+		return (NULL);
 	curr = float_lst;
 	len = 0;
 	p = (p == -1) ? 6 : p;

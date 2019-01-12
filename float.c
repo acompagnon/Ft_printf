@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:01:57 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 17:14:55 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 20:26:48 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void		float_call(va_list ap, t_print *lst, t_flags *flags, char format)
 		lst->keep = ftoa(va_arg(ap, double), flags->precision);
 	else
 		lst->keep = lftoa(va_arg(ap, long double), flags->precision);
+	if (!lst->keep)
+		return ;
 	if (format == 'F' && (lst->keep[1] == 'i' || lst->keep[1] == 'n'))
 		lst->keep = str_capitalize(lst->keep);
 	ft_put_in_buf(lst->keep, lst, flags);

@@ -6,13 +6,13 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 17:53:25 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 17:12:09 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 20:24:07 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_add(t_bint *lst1, t_bint *lst2)
+void			ft_add(t_bint *lst1, t_bint *lst2)
 {
 	t_bint	*tmp1;
 	t_bint	*tmp2;
@@ -29,7 +29,7 @@ static void	ft_add(t_bint *lst1, t_bint *lst2)
 	}
 }
 
-static void	ft_double(t_bint *lst1)
+static void		ft_double(t_bint *lst1)
 {
 	t_bint	*tmp;
 
@@ -42,7 +42,16 @@ static void	ft_double(t_bint *lst1)
 	ft_check_ten(lst1);
 }
 
-t_bint		*ft_intpart(t_float *lst)
+t_bint			*free_time(t_float *lst_float, t_bint *lst_bint)
+{
+	if (lst_float)
+		free(lst_float);
+	if (lst_bint)
+		free_lst(lst_bint);
+	return (NULL);
+}
+
+t_bint			*ft_intpart(t_float *lst)
 {
 	int		i;
 	t_bint	*lst1;
@@ -50,8 +59,10 @@ t_bint		*ft_intpart(t_float *lst)
 
 	lst1 = NULL;
 	lst2 = NULL;
-	lst1 = lst_init(lst1, 1);
-	lst2 = lst_init(lst2, 0);
+	if (!(lst1 = lst_init(lst1, 1)))
+		return (free_time(lst, NULL));
+	if (!(lst2 = lst_init(lst2, 0)))
+		return (free_time(lst, lst1));
 	i = lst->intexp;
 	while (i-- > 0)
 	{
@@ -66,7 +77,7 @@ t_bint		*ft_intpart(t_float *lst)
 	return (lst2);
 }
 
-static void	ft_multiply(t_bint *lst)
+void			ft_multiply(t_bint *lst)
 {
 	t_bint		*curr;
 	char		tmp;
@@ -83,32 +94,4 @@ static void	ft_multiply(t_bint *lst)
 			curr->next = lst_init(curr->next, 0);
 		curr = curr->next;
 	}
-}
-
-t_bint		*ft_floatpart(t_float *lst)
-{
-	t_bint		*lst1;
-	t_bint		*lst2;
-	int			i;
-
-	lst1 = NULL;
-	lst2 = NULL;
-	i = lst->intexp;
-	lst1 = lst_init(lst1, 5);
-	lst2 = lst_init(lst2, 0);
-	if (lst->mant[0] != '1')
-		i++;
-	while (i < lst->size)
-	{
-		if (i >= 0 && lst->mant[i] == '1')
-		{
-			ft_add(lst1, lst2);
-			ft_check_float(lst2);
-		}
-		ft_multiply(lst1);
-		i++;
-	}
-	free(lst);
-	free_lst(lst1);
-	return (lst2);
 }

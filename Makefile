@@ -6,7 +6,7 @@
 #    By: acompagn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/15 17:22:57 by acompagn          #+#    #+#              #
-#    Updated: 2019/01/12 15:11:23 by acompagn         ###   ########.fr        #
+#    Updated: 2019/01/12 20:20:45 by acompagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS = ft_printf.c \
 	   float_2.c \
 	   float_3.c \
 	   float_4.c \
+	   float_5.c \
 	   buf_flags.c \
 	   string_char.c \
 
