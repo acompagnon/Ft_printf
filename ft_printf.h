@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 21:48:26 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 17:15:11 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 18:27:08 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct			s_flags
 	int					l;
 	int					llf;
 	int					z;
+	int					star;
 }						t_flags;
 
 typedef struct			s_float
@@ -71,8 +72,12 @@ typedef struct			s_itoa
 
 void					ft_empty_buf(t_print *lst);
 void					ft_init_lst(t_flags *flags);
+void					print_lst_init(t_print *lst);
 void					lst_itoa_init(t_itoa *list);
-char					*get_nb(char *str, t_flags *flags);
+char					*get_nb(va_list ap, char *str, t_flags *flags);
+int						get_wildcard(va_list ap, t_flags *flags, int ok);
+int						ft_get_type(char *format, va_list ap, t_print *lst,
+						t_flags *flags);
 void					ft_put_in_buf(char *keep, t_print *lst, t_flags *flags);
 void					ft_itoa_base(uintmax_t a, char *base, t_print *lst,
 						t_flags *flags);

@@ -6,13 +6,30 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:24:27 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 11:54:46 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 19:01:20 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-intmax_t		ft_get_signed(va_list ap, t_flags *flags)
+int			get_wildcard(va_list ap, t_flags *flags, int ok)
+{
+	int		tmp;
+
+	flags->star = 1;
+	tmp = va_arg(ap, int);
+	if (!ok && tmp < 0)
+		return (flags->precision);
+	if (ok && tmp < 0)
+		flags->minus = -1;
+	if (tmp < 0)
+		tmp = -tmp;
+	if (!ok)
+		flags->minus = 1;
+	return (tmp);
+}
+
+intmax_t	ft_get_signed(va_list ap, t_flags *flags)
 {
 	intmax_t	arg;
 
@@ -37,7 +54,7 @@ intmax_t		ft_get_signed(va_list ap, t_flags *flags)
 	return (arg);
 }
 
-uintmax_t		ft_get_unsigned(va_list ap, t_flags *flags)
+uintmax_t	ft_get_unsigned(va_list ap, t_flags *flags)
 {
 	uintmax_t	arg;
 
@@ -60,4 +77,29 @@ uintmax_t		ft_get_unsigned(va_list ap, t_flags *flags)
 	else
 		arg = va_arg(ap, unsigned int);
 	return (arg);
+}
+
+int			ft_get_type(char *format, va_list ap, t_print *lst, t_flags *flags)
+{
+	if (*format == 's')
+		ft_string(va_arg(ap, char *), lst, flags);
+	else if (*format == 'c' || *format == 'C')
+		ft_char(ap, lst, flags);
+	else if (*format == 'p')
+		ft_pointer(ap, lst, flags);
+	else if (*format == 'd' || *format == 'D' || *format == 'i')
+		ft_itoa_dec(ft_get_signed(ap, flags), lst, flags);
+	else if (*format == 'x' || *format == 'X')
+		ft_hexadecimal(ft_get_unsigned(ap, flags), *format, lst, flags);
+	else if (*format == 'o' || *format == 'O')
+		ft_octal(ft_get_unsigned(ap, flags), lst, flags);
+	else if (*format == 'u' || *format == 'U')
+		ft_unsigned(ft_get_unsigned(ap, flags), lst, flags);
+	else if (*format == 'f' || *format == 'F')
+		float_call(ap, lst, flags, *format);
+	else if (*format)
+		ft_percent(lst, flags, *format);
+	else if (!*format)
+		return (1);
+	return (0);
 }

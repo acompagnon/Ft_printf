@@ -6,24 +6,26 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 20:44:17 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 16:51:16 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 19:01:38 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char		*get_nb(char *str, t_flags *flags)
+char		*get_nb(va_list ap, char *str, t_flags *flags)
 {
 	int		nb;
 	int		p;
 	int		w;
 
 	nb = 0;
-	p = 0;
-	if (*str == '.')
-	{
-		p = 1;
+	p = (*str == '.') ? 1 : 0;
+	if (p)
 		str++;
+	if (*str == '*')
+	{
+		flags->precision = get_wildcard(ap, flags, 0);
+		return (str);
 	}
 	w = p ? 0 : 1;
 	while (*str && *str >= '0' && *str <= '9')
@@ -107,4 +109,5 @@ void		ft_init_lst(t_flags *flags)
 	flags->llf = 0;
 	flags->h = 0;
 	flags->z = 0;
+	flags->star = 0;
 }

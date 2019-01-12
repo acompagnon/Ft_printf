@@ -6,13 +6,20 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:20:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 11:54:37 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 18:13:18 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		ft_pointer(va_list ap, t_print *lst, t_flags *flags)
+void	print_lst_init(t_print *lst)
+{
+	lst->i = 0;
+	lst->a = 0;
+	lst->keep = NULL;
+}
+
+void	ft_pointer(va_list ap, t_print *lst, t_flags *flags)
 {
 	unsigned long long	a;
 
@@ -20,7 +27,7 @@ void		ft_pointer(va_list ap, t_print *lst, t_flags *flags)
 	ft_itoa_addr(a, lst, flags);
 }
 
-void		apply_width(t_print *lst, t_flags *flags, int len)
+void	apply_width(t_print *lst, t_flags *flags, int len)
 {
 	int		i;
 
@@ -34,7 +41,7 @@ void		apply_width(t_print *lst, t_flags *flags, int len)
 	}
 }
 
-void		ft_percent(t_print *lst, t_flags *flags, char format)
+void	ft_percent(t_print *lst, t_flags *flags, char format)
 {
 	if (flags->width > 1 && !flags->minus)
 		string_width(lst, flags, flags->width - 1);
@@ -43,7 +50,7 @@ void		ft_percent(t_print *lst, t_flags *flags, char format)
 		string_width(lst, flags, flags->width - 1);
 }
 
-void		ft_unsigned(uintmax_t a, t_print *lst, t_flags *flags)
+void	ft_unsigned(uintmax_t a, t_print *lst, t_flags *flags)
 {
 	char		*base;
 
