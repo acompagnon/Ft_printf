@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:01:57 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 16:29:51 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 17:14:55 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void		init_float_lst(t_float *lst)
 char		*ftoa(double f, int p)
 {
 	t_float		*lst;
+	int			tmp;
 
 	if (!(lst = (t_float*)malloc(sizeof(t_float))))
 		return (0);
@@ -31,12 +32,14 @@ char		*ftoa(double f, int p)
 	if (!(check_double(f, lst)))
 		return (lst->keep);
 	lst->intexp = lst->intexp - 1022;
-	return (ft_precision(p, ft_intpart(lst), ft_floatpart(lst), lst->sign));
+	tmp = lst->sign;
+	return (ft_precision(p, ft_intpart(lst), ft_floatpart(lst), tmp));
 }
 
 char		*lftoa(long double f, int p)
 {
 	t_float		*lst;
+	int			tmp;
 
 	if (!(lst = (t_float*)malloc(sizeof(t_float))))
 		return (0);
@@ -45,7 +48,8 @@ char		*lftoa(long double f, int p)
 	if (!(check_long_double(f, lst)))
 		return (lst->keep);
 	lst->intexp = lst->intexp - 16382;
-	return (ft_precision(p, ft_intpart(lst), ft_floatpart(lst), lst->sign));
+	tmp = lst->sign;
+	return (ft_precision(p, ft_intpart(lst), ft_floatpart(lst), tmp));
 }
 
 static char	*str_capitalize(char *keep)

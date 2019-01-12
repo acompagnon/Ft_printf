@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 17:32:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 16:24:06 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 17:05:37 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ int		main(void)
 
 	ret = 9;
 	tret = 10;
-//	ft_printf("aloooo %f\n", (double)123);
-//	printf("mon printf = %d\n", ft_printf("%#43.7f %#43.1f\n", (double)42, (double)-42));
-//	printf("vrai printf = %d\n", printf("%#43.7f %#43.1f\n", (double)42, (double)-42));
+	//ft_printf("%.61f\n", (double)3982.2802944026329896587412804365158081054687500000000000000000000000000000000000000000000000000000000000);
+	printf("mon printf = %d\n", ft_printf("%#43.7f %#43.1f %f\n", (double)42, (double)-42, (double)1));
+	printf("vrai printf = %d\n", printf("%#43.7f %#43.1f %f\n", (double)42, (double)-42, (double)1));
 //	printf("mon printf = %d\n", ft_printf("%#.0f, %#.0f\n", (double)1, (double)-1));
 //	printf("vrai printf = %d\n", printf("%#.0f, %#.0f\n", (double)1, (double)-1));
 //	printf("mon printf = %d\n", ft_printf("% 43.4f, %+2.12f\n", (double)1.42, (double)1.42));
 //	printf("vrai printf = %d\n", printf("% 43.4f, %+2.12f\n", (double)1.42, (double)1.42));
-	printf("mon printf = %d\n", ft_printf("{% #+- 5.0f}\n", (double)0/0));
-	printf("vrai printf = %d\n", printf("{% #+- 5.0f}\n", (double)0/0));
+//	printf("mon printf = %d\n", ft_printf("{% #+- 5.0f}\n", (double)0/0));
+//	printf("vrai printf = %d\n", printf("{% #+- 5.0f}\n", (double)0/0));
 //	printf("mon printf = %d\n", ft_printf("%.15f\n", (double)-42.1));
 //	printf("vrai printf = %d\n", printf("%.15f\n", (double)-42.1));
 //	printf("mon printf = %d\n", ft_printf("%2.9f\n", (double)1234));

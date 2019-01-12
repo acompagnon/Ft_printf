@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:02:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 16:30:25 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 17:05:46 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void		print_long(unsigned char *c, t_float *lst)
 	i = 0;
 	j = 8;
 	k = 4;
+	printf("A");
 	lst->sign = (*(c + 9) & 128 ? 1 : 0);
 	lst->intexp = (*(c + 9) & ~128) << 8 | *(c + 8);
 	while (j--)
@@ -42,6 +43,7 @@ void		print_long(unsigned char *c, t_float *lst)
 			lst->mant[i++] = (*(c + j) & 1 << k) ? '1' : '0';
 	}
 	lst->mant[i] = '\0';
+	free(lst->keep);
 	lst->size = i;
 }
 

@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:02:42 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 16:28:42 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 17:14:53 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ int			lst_size(t_bint *lst)
 static char	*fill_str(t_bint *float_lst, char *keep, int p, int i)
 {
 	int		j;
+	t_bint	*tmp;
 
+	tmp = float_lst;
 	j = 0;
 	p ? keep[i++] = '.' : 1;
 	while (j < p)
@@ -68,7 +70,7 @@ static char	*fill_str(t_bint *float_lst, char *keep, int p, int i)
 		float_lst = float_lst->next;
 	}
 	keep[i + j] = '\0';
-	free_lst(float_lst);
+	free_lst(tmp);
 	return (keep);
 }
 
@@ -78,10 +80,12 @@ static char	*ft_create_str(int p, t_bint *int_lst, t_bint *float_lst, int sign)
 	int		malloc_size;
 	int		i;
 	char	*keep;
+	t_bint	*tmp;
 
 	size = lst_size(int_lst);
 	i = size;
-	malloc_size = size + (p ? p + 1 : p) + sign;
+	malloc_size = size + (p ? p + 1 : p) + sign + 1;
+	tmp = int_lst;
 	if (!(keep = (char *)malloc(sizeof(char) * malloc_size)))
 		return (NULL);
 	if (sign)
@@ -95,7 +99,7 @@ static char	*ft_create_str(int p, t_bint *int_lst, t_bint *float_lst, int sign)
 		keep[--size] = int_lst->nb + 48;
 		int_lst = int_lst->next;
 	}
-	free_lst(int_lst);
+	free_lst(tmp);
 	return (fill_str(float_lst, keep, p, i));
 }
 
