@@ -6,11 +6,11 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 17:32:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 18:58:19 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 19:10:40 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include <stdio.h>
+#include <stdio.h>
 #include "ft_printf.h"
 
 int		ft_printf(const char *format, ...);
@@ -62,8 +62,8 @@ int		main(void)
 
 	return (0);
 }
-*/
 
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -303,4 +303,4 @@ int		main(void)
 	else
 		printf("\033[32mno errors\033[0m\n");
 	return (0);
-}
+}*/

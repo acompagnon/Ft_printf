@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:24:27 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 19:01:20 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 19:11:07 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,14 @@ intmax_t	ft_get_signed(va_list ap, t_flags *flags)
 {
 	intmax_t	arg;
 
-	if (flags->z)
+	if (flags->j)
+		arg = va_arg(ap, intmax_t);
+	else if (flags->z)
 		arg = va_arg(ap, ssize_t);
 	else if (flags->l)
-	{
-		if (flags->l > 1)
-			arg = va_arg(ap, long long);
-		else
-			arg = va_arg(ap, long);
-	}
+		arg = flags->l > 1 ? va_arg(ap, long long) : va_arg(ap, long);
 	else if (flags->h)
-	{
-		if (flags->h > 1)
-			arg = (char)va_arg(ap, int);
-		else
-			arg = (short)va_arg(ap, int);
-	}
+		arg = flags->h > 1 ? (char)va_arg(ap, int) : (short)va_arg(ap, int);
 	else
 		arg = va_arg(ap, int);
 	return (arg);
@@ -58,22 +50,16 @@ uintmax_t	ft_get_unsigned(va_list ap, t_flags *flags)
 {
 	uintmax_t	arg;
 
-	if (flags->z)
+	if (flags->j)
+		arg = va_arg(ap, uintmax_t);
+	else if (flags->z)
 		arg = va_arg(ap, size_t);
 	else if (flags->l)
-	{
-		if (flags->l > 1)
-			arg = va_arg(ap, unsigned long long);
-		else
-			arg = va_arg(ap, unsigned long);
-	}
+		arg = flags->l > 1 ? va_arg(ap, unsigned long long) :
+			va_arg(ap, unsigned long);
 	else if (flags->h)
-	{
-		if (flags->h > 1)
-			arg = (unsigned char)va_arg(ap, unsigned int);
-		else
-			arg = (unsigned short)va_arg(ap, unsigned int);
-	}
+		arg = flags->h > 1 ? (unsigned char)va_arg(ap, unsigned int) :
+			(unsigned short)va_arg(ap, unsigned int);
 	else
 		arg = va_arg(ap, unsigned int);
 	return (arg);

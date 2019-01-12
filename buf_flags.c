@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 20:44:17 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 19:01:38 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 19:10:49 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ void		ft_init_lst(t_flags *flags)
 	flags->llf = 0;
 	flags->h = 0;
 	flags->z = 0;
+	flags->j = 0;
 	flags->star = 0;
 }

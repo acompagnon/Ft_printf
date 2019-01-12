@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 21:48:26 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 18:27:08 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 19:08:20 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct			s_flags
 	int					l;
 	int					llf;
 	int					z;
+	int					j;
 	int					star;
 }						t_flags;
 

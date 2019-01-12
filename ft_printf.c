@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 15:30:53 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 19:02:21 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 19:07:45 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_get_flags(va_list ap, char **format, t_flags *flags)
 	else if (**format == 'h')
 		flags->h++;
 	else if (**format == 'j')
-		flags->l += 2;
+		flags->j++;
 	else if (**format == 'z')
 		flags->z++;
 	else
