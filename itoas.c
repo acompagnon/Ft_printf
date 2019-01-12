@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:17:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 20:54:12 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 21:01:02 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,14 @@ static void	ft_itoa_base_2(t_itoa *list, t_print *lst, t_flags *flags)
 {
 	while (flags->precision > list->keep_len)
 	{
-		if (lst->i >= BUFFER_SIZE)
-			ft_empty_buf(lst);
+		(lst->i >= BUFFER_SIZE) ? ft_empty_buf(lst) : 1;
 		lst->buf[lst->i++] = '0';
 		flags->precision--;
 	}
 	if (!list->zero_case || flags->hashtag == 4)
 		while (list->keep[list->len])
 		{
-			if (lst->i >= BUFFER_SIZE)
-				ft_empty_buf(lst);
+			(lst->i >= BUFFER_SIZE) ? ft_empty_buf(lst) : 1;
 			lst->buf[lst->i++] = list->keep[list->len++];
 		}
 	if (flags->width > list->size && flags->minus)
@@ -46,8 +44,7 @@ static void	ft_itoa_base_1(t_itoa *list, t_print *lst, t_flags *flags)
 			hashtags(lst, flags);
 	if (flags->hashtag == 4 && list->nb != 0)
 	{
-		if (lst->i + 1 >= BUFFER_SIZE)
-			ft_empty_buf(lst);
+		(lst->i + 1 >= BUFFER_SIZE) ? ft_empty_buf(lst) : 1;
 		lst->buf[lst->i++] = '0';
 		list->keep_len++;
 	}

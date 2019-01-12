@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 21:01:12 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 20:33:01 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 21:03:45 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void		string_width(t_print *lst, t_flags *flags, int len)
 		flags->zero = 0;
 	while (i < len)
 	{
+		(lst->i >= BUFFER_SIZE) ? ft_empty_buf(lst) : 1;
 		lst->buf[lst->i++] = flags->zero + 32;
 		i++;
 	}
@@ -34,7 +35,7 @@ void		ft_char(va_list ap, t_print *lst, t_flags *flags)
 	tmp = va_arg(ap, int);
 	if (flags->width && !flags->minus)
 		string_width(lst, flags, flags->width - 1);
-	if (lst->i + 1 >= BUFFER_SIZE)
+	if (lst->i >= BUFFER_SIZE)
 		ft_empty_buf(lst);
 	lst->buf[lst->i++] = (char)tmp;
 	if (flags->width && flags->minus)

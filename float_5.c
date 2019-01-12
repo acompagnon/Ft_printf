@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 20:20:17 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 20:26:22 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 21:11:12 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char		*malloc_fail(t_bint *int_lst, t_bint *float_lst)
 	return (NULL);
 }
 
-static void		floatpart_1(t_float *lst, t_bint *lst1, t_bint *lst2)
+static void	floatpart_1(t_float *lst, t_bint *lst1, t_bint *lst2)
 {
 	int		i;
 
@@ -48,7 +48,7 @@ static void		floatpart_1(t_float *lst, t_bint *lst1, t_bint *lst2)
 	}
 }
 
-t_bint			*ft_floatpart(t_float *lst)
+t_bint		*ft_floatpart(t_float *lst)
 {
 	t_bint		*lst1;
 	t_bint		*lst2;

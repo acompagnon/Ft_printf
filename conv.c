@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:20:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 20:33:46 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 21:07:53 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	apply_width(t_print *lst, t_flags *flags, int len)
 		len -= 2;
 	while (i < len)
 	{
+		(lst->i >= BUFFER_SIZE) ? ft_empty_buf(lst) : 1;
 		lst->buf[lst->i++] = flags->zero + 32;
 		i++;
 	}
@@ -45,7 +46,7 @@ void	ft_percent(t_print *lst, t_flags *flags, char format)
 {
 	if (flags->width > 1 && !flags->minus)
 		string_width(lst, flags, flags->width - 1);
-	if (lst->i + 1 >= BUFFER_SIZE)
+	if (lst->i >= BUFFER_SIZE)
 		ft_empty_buf(lst);
 	lst->buf[lst->i++] = format;
 	if (flags->width > 1 && flags->minus)

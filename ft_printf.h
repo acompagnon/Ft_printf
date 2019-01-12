@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 21:48:26 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 20:53:18 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 21:14:46 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FT_PRINTF_H
 # define BUFFER_SIZE 1000
 # define FORMAT_DOU (**format == 'D' || **format == 'O' || **format == 'U')
-# include <stdio.h>
 # include <stdarg.h>
 # include <unistd.h>
 # include "libft.h"
@@ -118,6 +117,4 @@ t_bint					*free_time(t_float *lst_float, t_bint *lst_bint);
 char					*malloc_fail(t_bint *int_lst, t_bint *float_lst);
 int						check_validity(t_bint *int_lst, t_bint *float_lst);
 
-char					*ftoa(double f, int p);
-char					*lftoa(long double f, int p);
 #endif
