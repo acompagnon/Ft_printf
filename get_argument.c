@@ -6,11 +6,19 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:24:27 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 19:11:07 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 20:53:26 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void		hashtags(t_print *lst, t_flags *flags)
+{
+	if (lst->i + 2 >= BUFFER_SIZE)
+		ft_empty_buf(lst);
+	lst->buf[lst->i++] = '0';
+	lst->buf[lst->i++] = (flags->hashtag == 2) ? 'x' : 'X';
+}
 
 int			get_wildcard(va_list ap, t_flags *flags, int ok)
 {

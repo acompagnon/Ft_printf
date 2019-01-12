@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 21:48:26 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 20:26:09 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 20:53:18 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void					ft_percent(t_print *lst, t_flags *flags, char format);
 void					ft_unsigned(uintmax_t a, t_print *lst, t_flags *flags);
 intmax_t				ft_get_signed(va_list ap, t_flags *flags);
 uintmax_t				ft_get_unsigned(va_list ap, t_flags *flags);
+void					hashtags(t_print *lst, t_flags *flags);
 
 void					float_call(va_list ap, t_print *lst, t_flags *flags,
 						char format);

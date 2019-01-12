@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 11:45:29 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 11:52:24 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 20:51:45 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static void	ft_itoa_addr_2(t_itoa *list, t_print *lst, t_flags *flags)
 		lst->buf[lst->i++] = list->keep[a++];
 	while (flags->precision > list->keep_len - 2)
 	{
+		if (lst->i >= BUFFER_SIZE)
+			ft_empty_buf(lst);
 		lst->buf[lst->i++] = '0';
 		flags->precision--;
 	}

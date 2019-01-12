@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:17:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 18:52:04 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 20:54:12 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	ft_itoa_base_2(t_itoa *list, t_print *lst, t_flags *flags)
 {
 	while (flags->precision > list->keep_len)
 	{
+		if (lst->i >= BUFFER_SIZE)
+			ft_empty_buf(lst);
 		lst->buf[lst->i++] = '0';
 		flags->precision--;
 	}
@@ -36,20 +38,16 @@ static void	ft_itoa_base_1(t_itoa *list, t_print *lst, t_flags *flags)
 	flags->plus ? flags->space = 0 : 1;
 	if (flags->hashtag == 2 || flags->hashtag == 3)
 		if (list->nb != 0 && flags->zero)
-		{
-			lst->buf[lst->i++] = '0';
-			lst->buf[lst->i++] = (flags->hashtag == 2) ? 'x' : 'X';
-		}
+			hashtags(lst, flags);
 	if (flags->width > list->size && !flags->minus)
 		apply_width(lst, flags, flags->width - list->size);
 	if (flags->hashtag == 2 || flags->hashtag == 3)
 		if (list->nb != 0 && !flags->zero)
-		{
-			lst->buf[lst->i++] = '0';
-			lst->buf[lst->i++] = (flags->hashtag == 2) ? 'x' : 'X';
-		}
+			hashtags(lst, flags);
 	if (flags->hashtag == 4 && list->nb != 0)
 	{
+		if (lst->i + 1 >= BUFFER_SIZE)
+			ft_empty_buf(lst);
 		lst->buf[lst->i++] = '0';
 		list->keep_len++;
 	}
@@ -87,6 +85,7 @@ void		ft_itoa_base(uintmax_t a, char *base, t_print *lst, t_flags *flags)
 
 static void	ft_itoa_2(t_itoa *list, t_print *lst, t_flags *flags)
 {
+	(lst->i + 1 >= BUFFER_SIZE) ? ft_empty_buf(lst) : 1;
 	if (list->nbr < 0 || (list->nbr >= 0 && (flags->plus || flags->space)))
 		flags->width--;
 	(list->nbr < 0 && flags->zero != 0) ? lst->buf[lst->i++] = '-' : 1;
@@ -98,16 +97,15 @@ static void	ft_itoa_2(t_itoa *list, t_print *lst, t_flags *flags)
 		lst->buf[lst->i++] = '-';
 	if (flags->zero == 0 && list->nbr >= 0 && flags->plus)
 		lst->buf[lst->i++] = '+';
-	while (flags->precision > list->keep_len)
+	while (flags->precision-- > list->keep_len)
 	{
+		(lst->i >= BUFFER_SIZE) ? ft_empty_buf(lst) : 1;
 		lst->buf[lst->i++] = '0';
-		flags->precision--;
 	}
 	if (!list->zero_case)
 		while (list->keep[list->len])
 		{
-			if (lst->i >= BUFFER_SIZE)
-				ft_empty_buf(lst);
+			(lst->i >= BUFFER_SIZE) ? ft_empty_buf(lst) : 1;
 			lst->buf[lst->i++] = list->keep[list->len++];
 		}
 	if (flags->width > list->size && flags->minus)

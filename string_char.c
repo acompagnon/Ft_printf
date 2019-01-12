@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 21:01:12 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 18:57:07 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 20:33:01 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		ft_string(char *s, t_print *lst, t_flags *flags)
 			string_width(lst, flags, flags->width - len);
 		while (*s)
 		{
-			if (lst->i == BUFFER_SIZE)
+			if (lst->i >= BUFFER_SIZE)
 				ft_empty_buf(lst);
 			if (flags->precision >= 0)
 				if (!flags->precision--)
