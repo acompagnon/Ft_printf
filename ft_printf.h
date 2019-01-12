@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 21:48:26 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 13:21:31 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 16:17:24 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ char					*ft_precision(int p, t_bint *int_lst, t_bint *float_lst,
 int						check_double(double f, t_float *lst);
 int						check_long_double(long double f, t_float *lst);
 void					print_long(unsigned char *c, t_float *lst);
+void					free_lst(t_bint *begin_lst);
 
 char					*ftoa(double f, int p);
 char					*lftoa(long double f, int p);

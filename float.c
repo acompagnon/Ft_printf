@@ -6,11 +6,19 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:01:57 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 15:00:24 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 16:29:51 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void		init_float_lst(t_float *lst)
+{
+	lst->keep = NULL;
+	lst->sign = 0;
+	lst->intexp = 0;
+	lst->size = 0;
+}
 
 char		*ftoa(double f, int p)
 {
@@ -18,6 +26,7 @@ char		*ftoa(double f, int p)
 
 	if (!(lst = (t_float*)malloc(sizeof(t_float))))
 		return (0);
+	init_float_lst(lst);
 	print_bits((unsigned char *)&f, lst);
 	if (!(check_double(f, lst)))
 		return (lst->keep);
@@ -31,6 +40,7 @@ char		*lftoa(long double f, int p)
 
 	if (!(lst = (t_float*)malloc(sizeof(t_float))))
 		return (0);
+	init_float_lst(lst);
 	print_long((unsigned char *)&f, lst);
 	if (!(check_long_double(f, lst)))
 		return (lst->keep);

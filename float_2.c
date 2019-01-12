@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 17:53:25 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 12:01:36 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 16:30:23 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_bint		*ft_intpart(t_float *lst)
 		}
 		ft_double(lst1);
 	}
+	free_lst(lst1);
 	return (lst2);
 }
 
@@ -107,5 +108,8 @@ t_bint		*ft_floatpart(t_float *lst)
 		ft_multiply(lst1);
 		i++;
 	}
+	free(lst->mant);
+	free(lst);
+	free_lst(lst1);
 	return (lst2);
 }

@@ -6,11 +6,23 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:02:59 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 13:12:57 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 16:30:25 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void		free_lst(t_bint *begin_lst)
+{
+	t_bint *tmp;
+
+	while (begin_lst)
+	{
+		tmp = begin_lst;
+		begin_lst = begin_lst->next;
+		free(tmp);
+	}
+}
 
 void		print_long(unsigned char *c, t_float *lst)
 {
@@ -52,6 +64,7 @@ int			check_double(double f, t_float *lst)
 		lst->keep[i++] = nan ? 'a' : 'n';
 		lst->keep[i++] = nan ? 'n' : 'f';
 		lst->keep[i] = '\0';
+		free(lst->mant);
 		return (0);
 	}
 	return (1);
@@ -76,6 +89,7 @@ int			check_long_double(long double f, t_float *lst)
 		lst->keep[i++] = nan ? 'a' : 'n';
 		lst->keep[i++] = nan ? 'n' : 'f';
 		lst->keep[i] = '\0';
+		free(lst->mant);
 		return (0);
 	}
 	return (1);

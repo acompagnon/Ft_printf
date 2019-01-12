@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:02:42 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 14:05:32 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/12 16:28:42 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static char	*fill_str(t_bint *float_lst, char *keep, int p, int i)
 		float_lst = float_lst->next;
 	}
 	keep[i + j] = '\0';
+	free_lst(float_lst);
 	return (keep);
 }
 
@@ -94,6 +95,7 @@ static char	*ft_create_str(int p, t_bint *int_lst, t_bint *float_lst, int sign)
 		keep[--size] = int_lst->nb + 48;
 		int_lst = int_lst->next;
 	}
+	free_lst(int_lst);
 	return (fill_str(float_lst, keep, p, i));
 }
 
