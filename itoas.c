@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:17:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/13 17:01:30 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/13 18:11:56 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	ft_itoa_base_2(t_itoa *list, t_print *lst, t_flags *flags)
 
 static void	ft_itoa_base_1(t_itoa *list, t_print *lst, t_flags *flags)
 {
-	(flags->hashtag == 4 && list->nb != 0) ? flags->width-- : 1;
+	(flags->hashtag == 4 && list->nb != 0 && flags->precision <= 0) ? flags->width-- : 1;
 	flags->plus ? flags->space = 0 : 1;
 	if (flags->hashtag == 2 || flags->hashtag == 3)
 		if (list->nb != 0 && flags->zero)

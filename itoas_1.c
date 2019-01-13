@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 11:45:29 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/13 15:21:24 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/13 18:17:43 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void		ft_itoa_addr(uintmax_t a, t_print *lst, t_flags *flags)
 	list.zero_case = (tmp == 0 && flags->precision == 0) ? 1 : 0;
 	list.zero_case ? list.len-- : 1;
 	list.zero_case ? list.size-- : 1;
+	(tmp == 0 && flags->precision >= 0) ? flags->width-- : 1;
 	list.keep[list.len] = '\0';
 	list.keep[0] = '0';
 	list.keep[1] = 'x';
