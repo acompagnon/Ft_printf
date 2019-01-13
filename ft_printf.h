@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 21:48:26 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 21:14:46 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/13 17:06:31 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_PRINTF_H
 # define BUFFER_SIZE 1000
 # define FORMAT_DOU (**format == 'D' || **format == 'O' || **format == 'U')
+# include <stdio.h>
 # include <stdarg.h>
 # include <unistd.h>
 # include "libft.h"
@@ -69,6 +70,8 @@ typedef struct			s_itoa
 	char				keep[21];
 	int					keep_len;
 }						t_itoa;
+
+int						ft_printf(const char *format, ...);
 
 void					ft_empty_buf(t_print *lst);
 void					ft_init_lst(t_flags *flags);

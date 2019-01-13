@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:17:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 21:01:02 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/13 17:01:30 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ void		ft_itoa_base(uintmax_t a, char *base, t_print *lst, t_flags *flags)
 	list.keep[list.len] = '\0';
 	list.size = (flags->precision != -1 && flags->precision > list.len) ?
 		flags->precision : list.len;
-	if (list.zero_case)
-		list.size--;
+	list.zero_case ? list.size-- : 1;
+	if (flags->star && list.zero_case && flags->hashtag == 4)
+		flags->width--;
 	list.keep_len = list.len;
 	while (list.len--)
 	{
