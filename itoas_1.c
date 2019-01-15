@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 11:45:29 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/13 18:17:43 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/15 12:42:21 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,28 @@ void		ft_hexadecimal(intmax_t a, char c, t_print *lst, t_flags *flags)
 
 static void	ft_itoa_addr_2(t_itoa *list, t_print *lst, t_flags *flags)
 {
-	int		a;
-
-	a = 0;
-	list->size = (flags->precision != -1 && flags->precision > list->keep_len) ?
-		flags->precision : list->keep_len;
+	list->keep[0] = '0';
+	list->keep[1] = 'x';
+	list->len = 0;
+	flags->plus ? flags->space = 0 : 1;
+	if (flags->zero)
+		while (list->len < 2)
+			lst->buf[lst->i++] = list->keep[list->len++];
 	if (flags->width > list->size && !flags->minus)
 		apply_width(lst, flags, flags->width - list->size);
-	while (a < 2)
-		lst->buf[lst->i++] = list->keep[a++];
+	if (!flags->zero)
+		while (list->len < 2)
+			lst->buf[lst->i++] = list->keep[list->len++];
 	while (flags->precision > list->keep_len - 2)
 	{
-		if (lst->i >= BUFFER_SIZE)
-			ft_empty_buf(lst);
+		(lst->i >= BUFFER_SIZE) ? ft_empty_buf(lst) : 1;
 		lst->buf[lst->i++] = '0';
 		flags->precision--;
 	}
-	while (list->keep[a])
+	while (list->keep[list->len])
 	{
-		if (lst->i >= BUFFER_SIZE)
-			ft_empty_buf(lst);
-		lst->buf[lst->i++] = list->keep[a++];
+		(lst->i >= BUFFER_SIZE) ? ft_empty_buf(lst) : 1;
+		lst->buf[lst->i++] = list->keep[list->len++];
 	}
 	if (flags->width && flags->minus)
 		apply_width(lst, flags, flags->width - list->size);
@@ -78,15 +79,15 @@ void		ft_itoa_addr(uintmax_t a, t_print *lst, t_flags *flags)
 	list.len = 3;
 	tmp = a;
 	base = "0123456789abcdef\0";
+	(flags->minus || flags->precision != -1) ? flags->zero = 0 : 1;
+	list.zero_case = (tmp == 0 && flags->precision == 0) ? 1 : 0;
 	while (a /= 16)
 		list.len++;
-	list.zero_case = (tmp == 0 && flags->precision == 0) ? 1 : 0;
 	list.zero_case ? list.len-- : 1;
-	list.zero_case ? list.size-- : 1;
-	(tmp == 0 && flags->precision >= 0) ? flags->width-- : 1;
+	list.size = (flags->precision != -1 && flags->precision > list.len)
+		? flags->precision : list.len;
+	(tmp == 0 && flags->precision > 1) ? flags->width-- : 1;
 	list.keep[list.len] = '\0';
-	list.keep[0] = '0';
-	list.keep[1] = 'x';
 	list.keep_len = list.len;
 	if (!list.zero_case)
 		while (list.len-- > 2)
@@ -94,6 +95,5 @@ void		ft_itoa_addr(uintmax_t a, t_print *lst, t_flags *flags)
 			list.keep[list.len] = base[tmp % 16];
 			tmp /= 16;
 		}
-	list.len++;
 	ft_itoa_addr_2(&list, lst, flags);
 }

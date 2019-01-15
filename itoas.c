@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:17:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/13 18:11:56 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/15 12:47:28 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,24 @@ static void	ft_itoa_base_2(t_itoa *list, t_print *lst, t_flags *flags)
 
 static void	ft_itoa_base_1(t_itoa *list, t_print *lst, t_flags *flags)
 {
-	(flags->hashtag == 4 && list->nb != 0 && flags->precision <= 0) ? flags->width-- : 1;
+	list->len++;
 	flags->plus ? flags->space = 0 : 1;
-	if (flags->hashtag == 2 || flags->hashtag == 3)
+	if (flags->hashtag == 4 && list->nb != 0)
+	{
+		flags->width--;
+		flags->precision--;
+	}
+	if (flags->hashtag == 4)
+		list->size = (flags->precision != -1 && flags->precision
+			> list->keep_len) ? flags->precision : list->keep_len;
+	if (flags->hashtag == 2 || flags->hashtag == 3 || flags->hashtag == 4)
 		if (list->nb != 0 && flags->zero)
 			hashtags(lst, flags);
 	if (flags->width > list->size && !flags->minus)
 		apply_width(lst, flags, flags->width - list->size);
-	if (flags->hashtag == 2 || flags->hashtag == 3)
+	if (flags->hashtag == 2 || flags->hashtag == 3 || flags->hashtag == 4)
 		if (list->nb != 0 && !flags->zero)
 			hashtags(lst, flags);
-	if (flags->hashtag == 4 && list->nb != 0)
-	{
-		(lst->i + 1 >= BUFFER_SIZE) ? ft_empty_buf(lst) : 1;
-		lst->buf[lst->i++] = '0';
-		list->keep_len++;
-	}
 	ft_itoa_base_2(list, lst, flags);
 }
 
@@ -66,18 +68,17 @@ void		ft_itoa_base(uintmax_t a, char *base, t_print *lst, t_flags *flags)
 	while (a /= base_len)
 		list.len++;
 	list.keep[list.len] = '\0';
+	if (flags->hashtag == 2 || flags->hashtag == 3)
+		list.len + 1 >= flags->precision ? 1 : flags->width--;
 	list.size = (flags->precision != -1 && flags->precision > list.len) ?
 		flags->precision : list.len;
 	list.zero_case ? list.size-- : 1;
-	if (flags->star && list.zero_case && flags->hashtag == 4)
-		flags->width--;
 	list.keep_len = list.len;
 	while (list.len--)
 	{
 		list.keep[list.len] = base[tmp % base_len];
 		tmp /= base_len;
 	}
-	list.len++;
 	ft_itoa_base_1(&list, lst, flags);
 }
 

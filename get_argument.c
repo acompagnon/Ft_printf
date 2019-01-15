@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 16:24:27 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/13 15:27:42 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/01/15 11:55:14 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void		hashtags(t_print *lst, t_flags *flags)
 	if (lst->i + 2 >= BUFFER_SIZE)
 		ft_empty_buf(lst);
 	lst->buf[lst->i++] = '0';
-	lst->buf[lst->i++] = (flags->hashtag == 2) ? 'x' : 'X';
+	if (flags->hashtag != 4)
+		lst->buf[lst->i++] = (flags->hashtag == 2) ? 'x' : 'X';
 }
 
 int			get_wildcard(va_list ap, t_flags *flags, int ok)
