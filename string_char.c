@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 21:01:12 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/14 17:51:23 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/06/19 16:51:52 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		ft_char(va_list ap, t_print *lst, t_flags *flags)
 		string_width(lst, flags, flags->width - 1);
 }
 
-char		*ft_null_string(char *keep)
+static char	*ft_null_string(char *keep)
 {
 	int		i;
 

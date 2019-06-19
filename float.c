@@ -6,13 +6,13 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:01:57 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 20:26:48 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/06/19 16:33:59 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		init_float_lst(t_float *lst)
+static void	init_float_lst(t_float *lst)
 {
 	lst->keep = NULL;
 	lst->sign = 0;
@@ -20,7 +20,7 @@ void		init_float_lst(t_float *lst)
 	lst->size = 0;
 }
 
-char		*ftoa(double f, int p)
+static char	*ftoa(double f, int p)
 {
 	t_float		*lst;
 	int			tmp;
@@ -36,7 +36,7 @@ char		*ftoa(double f, int p)
 	return (ft_precision(p, ft_intpart(lst), ft_floatpart(lst), tmp));
 }
 
-char		*lftoa(long double f, int p)
+static char	*lftoa(long double f, int p)
 {
 	t_float		*lst;
 	int			tmp;

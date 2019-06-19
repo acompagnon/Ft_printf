@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:02:42 by acompagn          #+#    #+#             */
-/*   Updated: 2019/01/12 20:26:25 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/06/19 16:51:54 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	int_aug(int p, t_bint *int_lst, t_bint *float_lst)
 	ft_check_ten(int_lst);
 }
 
-int			lst_size(t_bint *lst)
+static int	lst_size(t_bint *lst)
 {
 	int		size;
 	t_bint	*curr;
