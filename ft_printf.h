@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 21:48:26 by acompagn          #+#    #+#             */
-/*   Updated: 2019/06/19 16:51:50 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/06/19 16:57:56 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,6 @@ typedef struct			s_print
 	int					a;
 	char				*keep;
 }						t_print;
-
-typedef struct			s_str
-{
-	char				str_ret[BUFFER_SIZE + 1];
-	int					i;
-	struct s_str		*next;
-}						t_str;
 
 typedef struct			s_flags
 {
